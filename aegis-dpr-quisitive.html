@@ -1,0 +1,1956 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Detailed Project Report — AEGIS NOC/SOC Platform · Quisitive Businesses LLP</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500;600&family=Inter+Tight:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#0a0e14;
+  --paper:#f4f1ea;
+  --paper-warm:#ede8dc;
+  --paper-deep:#e0d9c7;
+  --rule:#1a1f2a;
+  --rule-light:#3a3f4a;
+  --muted:#5a5f6a;
+  --accent:#a8332a;
+  --accent-deep:#7a1f18;
+  --gold:#a8884a;
+  --teal:#1f4a4a;
+  --good:#2a5a3a;
+  --warn:#a86a1a;
+  --shadow:0 1px 0 rgba(10,14,20,.04),0 0 0 1px rgba(10,14,20,.06);
+}
+html{font-size:15px;scroll-behavior:smooth}
+body{
+  font-family:'Inter Tight',sans-serif;
+  background:var(--paper);
+  color:var(--ink);
+  line-height:1.65;
+  font-feature-settings:"ss01","ss02","cv11";
+  font-weight:400;
+  -webkit-font-smoothing:antialiased;
+}
+
+.serif{font-family:'Fraunces',serif;font-optical-sizing:auto}
+.mono{font-family:'JetBrains Mono',monospace;font-feature-settings:"ss01","ss02","zero"}
+h1,h2,h3,h4,h5{font-family:'Fraunces',serif;font-weight:500;letter-spacing:-.02em;line-height:1.15}
+h1{font-size:clamp(2.4rem,5vw,4.2rem);font-weight:400;letter-spacing:-.035em}
+h2{font-size:clamp(1.8rem,3vw,2.6rem);font-weight:400;letter-spacing:-.025em}
+h3{font-size:clamp(1.3rem,2vw,1.7rem);font-weight:500}
+h4{font-size:1.15rem;font-weight:600}
+h5{font-size:.95rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;font-family:'Inter Tight',sans-serif}
+p{margin-bottom:1.1em}
+strong{font-weight:600;color:var(--ink)}
+em{font-style:italic}
+
+.shell{max-width:1280px;margin:0 auto;padding:0 clamp(1.5rem,4vw,4rem)}
+
+.topbar{
+  border-bottom:1px solid var(--rule);
+  padding:14px 0;font-size:.78rem;
+  font-family:'JetBrains Mono',monospace;
+  display:flex;justify-content:space-between;align-items:center;
+  text-transform:uppercase;letter-spacing:.12em;color:var(--muted);
+}
+.topbar-left,.topbar-right{display:flex;gap:24px;align-items:center;flex-wrap:wrap}
+.classification{
+  background:var(--ink);color:var(--paper);
+  padding:4px 10px;font-size:.7rem;letter-spacing:.18em;font-weight:500;
+}
+
+.cover{
+  min-height:90vh;padding:3rem 0 5rem;
+  display:flex;flex-direction:column;justify-content:space-between;
+  position:relative;border-bottom:2px solid var(--rule);
+}
+.cover-meta{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.78rem;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--muted);
+  display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;
+  padding:2rem 0;border-top:1px solid var(--rule);
+  border-bottom:1px solid var(--rule);margin-top:3rem;
+}
+.cover-meta dt{font-size:.68rem;color:var(--muted);margin-bottom:.4rem;font-weight:500}
+.cover-meta dd{color:var(--ink);font-size:.85rem;letter-spacing:.04em;text-transform:none;font-weight:600}
+.cover-title{
+  font-size:clamp(3rem,7vw,6rem);
+  line-height:.95;letter-spacing:-.04em;
+  font-weight:300;margin:1.5rem 0;
+}
+.cover-title .accent{color:var(--accent);font-style:italic;font-weight:400}
+.cover-sub{
+  font-family:'Fraunces',serif;
+  font-size:clamp(1.1rem,1.6vw,1.4rem);
+  font-style:italic;color:var(--muted);
+  max-width:54ch;font-weight:400;line-height:1.5;
+}
+.cover-doc{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:2rem;
+  display:flex;align-items:center;gap:1rem;
+}
+.cover-doc::before,.cover-doc::after{
+  content:'';flex:1;height:1px;background:var(--accent);max-width:60px;
+}
+.cover-watermark{
+  position:absolute;right:0;top:50%;
+  transform:translateY(-50%) rotate(-90deg);
+  font-family:'JetBrains Mono',monospace;
+  font-size:.7rem;letter-spacing:.4em;color:var(--muted);opacity:.4;
+}
+.cover-headline-stat{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:0;
+  border-top:2px solid var(--ink);border-bottom:1px solid var(--rule);
+  margin-top:1.5rem;
+}
+.cover-stat{
+  padding:1.4rem 1.2rem;border-right:1px solid var(--rule-light);
+}
+.cover-stat:last-child{border-right:none}
+.cover-stat-label{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:.5rem;
+}
+.cover-stat-value{
+  font-family:'Fraunces',serif;font-size:2.2rem;
+  font-weight:400;letter-spacing:-.02em;line-height:1;color:var(--ink);
+}
+.cover-stat-value .unit{font-size:.55em;color:var(--muted);font-style:italic;margin-left:.2em}
+.cover-stat-sub{font-size:.78rem;color:var(--muted);margin-top:.3rem}
+
+section{padding:5rem 0;border-bottom:1px solid var(--rule-light);position:relative}
+.section-num{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.75rem;letter-spacing:.2em;color:var(--accent);
+  margin-bottom:1.2rem;display:flex;align-items:center;gap:.8rem;
+  text-transform:uppercase;
+}
+.section-num::before{content:'';width:32px;height:1px;background:var(--accent)}
+.section-title{margin-bottom:.8rem;max-width:24ch}
+.section-lede{
+  font-family:'Fraunces',serif;font-size:1.25rem;font-style:italic;
+  color:var(--muted);max-width:60ch;line-height:1.5;
+  margin-bottom:3rem;font-weight:400;
+}
+
+.two-col{display:grid;grid-template-columns:1fr 2.4fr;gap:4rem;align-items:start}
+.two-col-label{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.72rem;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--muted);position:sticky;top:1rem;
+  padding-top:.4rem;border-top:2px solid var(--ink);font-weight:500;
+}
+.two-col-body p{font-size:1.02rem;color:#1a1f2a}
+.two-col-body p:not(:last-child){margin-bottom:1.3em}
+
+.dropcap::first-letter{
+  font-family:'Fraunces',serif;float:left;
+  font-size:5.2em;line-height:.85;padding:0.08em 0.08em 0 0;
+  font-weight:400;color:var(--accent);font-style:italic;
+}
+
+.kpi-row{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:0;border-top:2px solid var(--ink);border-bottom:1px solid var(--rule);
+  margin:2.5rem 0;
+}
+.kpi{padding:1.6rem 1.4rem;border-right:1px solid var(--rule-light)}
+.kpi:last-child{border-right:none}
+.kpi-label{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:.6rem;
+}
+.kpi-value{
+  font-family:'Fraunces',serif;font-size:2.4rem;font-weight:400;
+  letter-spacing:-.02em;line-height:1;color:var(--ink);margin-bottom:.3rem;
+}
+.kpi-value .unit{font-size:.55em;color:var(--muted);font-style:italic;letter-spacing:0;margin-left:.2em}
+.kpi-sub{font-size:.78rem;color:var(--muted);line-height:1.4}
+
+.tbl-wrap{overflow-x:auto;margin:2rem 0}
+table.dpr{
+  width:100%;border-collapse:collapse;font-size:.88rem;
+  border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);
+}
+table.dpr th{
+  text-align:left;padding:.85rem 1rem;
+  font-family:'JetBrains Mono',monospace;
+  font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;
+  font-weight:600;color:var(--ink);
+  border-bottom:1px solid var(--rule);background:var(--paper-warm);
+  vertical-align:bottom;
+}
+table.dpr td{
+  padding:.85rem 1rem;border-bottom:1px solid var(--rule-light);
+  vertical-align:top;line-height:1.5;
+}
+table.dpr td.num{font-family:'JetBrains Mono',monospace;text-align:right;white-space:nowrap}
+table.dpr tr:hover td{background:rgba(168,51,42,.025)}
+table.dpr tfoot td,table.dpr tr.total td{
+  font-weight:600;border-top:2px solid var(--ink);background:var(--paper-warm);
+}
+table.dpr caption{
+  caption-side:top;text-align:left;
+  font-family:'JetBrains Mono',monospace;
+  font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--muted);padding-bottom:.6rem;
+}
+
+.callout{
+  background:var(--paper-warm);
+  border-left:3px solid var(--accent);
+  padding:1.5rem 1.8rem;margin:2rem 0;font-size:.95rem;
+}
+.callout-label{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--accent);font-weight:600;margin-bottom:.6rem;
+}
+.callout p:last-child{margin-bottom:0}
+.callout.dark{background:var(--ink);color:var(--paper);border-left-color:var(--gold)}
+.callout.dark .callout-label{color:var(--gold)}
+.callout.dark p strong{color:var(--paper)}
+
+.toc{border-top:2px solid var(--ink);border-bottom:1px solid var(--rule);padding:2rem 0}
+.toc-title{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;
+  margin-bottom:1.5rem;color:var(--muted);
+}
+.toc-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:0 3rem}
+.toc-item{
+  display:grid;grid-template-columns:30px 1fr auto;gap:1rem;
+  padding:.7rem 0;border-bottom:1px dotted var(--rule-light);
+  font-size:.92rem;text-decoration:none;color:var(--ink);
+  transition:color .15s;align-items:baseline;
+}
+.toc-item:hover{color:var(--accent)}
+.toc-num{font-family:'JetBrains Mono',monospace;font-size:.78rem;color:var(--accent);font-weight:600}
+.toc-page{font-family:'JetBrains Mono',monospace;font-size:.78rem;color:var(--muted)}
+
+.phase{
+  display:grid;grid-template-columns:120px 1fr;gap:2.5rem;
+  padding:2rem 0;border-bottom:1px solid var(--rule-light);align-items:start;
+}
+.phase-marker{
+  font-family:'JetBrains Mono',monospace;
+  text-align:right;font-size:.78rem;letter-spacing:.08em;
+  color:var(--muted);position:sticky;top:1rem;
+}
+.phase-marker .num{
+  display:block;font-family:'Fraunces',serif;
+  font-size:2.6rem;color:var(--accent);font-weight:300;
+  font-style:italic;line-height:1;margin-bottom:.3rem;
+}
+.phase-body h4{margin-bottom:.5rem;font-size:1.3rem}
+.phase-body .phase-tag{
+  display:inline-block;
+  font-family:'JetBrains Mono',monospace;
+  font-size:.7rem;letter-spacing:.1em;
+  background:var(--ink);color:var(--paper);
+  padding:3px 9px;margin-bottom:1rem;text-transform:uppercase;
+}
+.phase-budget{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:0;
+  margin:1rem 0 1.2rem;
+  border-top:1px solid var(--rule-light);
+  border-bottom:1px solid var(--rule-light);
+}
+.phase-budget-cell{
+  padding:.8rem 1rem;border-right:1px solid var(--rule-light);
+}
+.phase-budget-cell:last-child{border-right:none}
+.phase-budget-label{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.65rem;letter-spacing:.1em;
+  color:var(--muted);text-transform:uppercase;margin-bottom:.2rem;
+}
+.phase-budget-value{
+  font-family:'Fraunces',serif;
+  font-size:1.3rem;font-weight:500;color:var(--ink);
+}
+
+.cost-breakdown{margin:2.5rem 0}
+.cost-row{
+  display:grid;grid-template-columns:1.4fr 3fr 130px;gap:1.5rem;
+  padding:1rem 0;border-bottom:1px solid var(--rule-light);align-items:center;
+}
+.cost-row .label{font-weight:500;font-size:.95rem}
+.cost-row .label .sub{display:block;font-size:.78rem;color:var(--muted);font-weight:400;margin-top:2px}
+.cost-bar{height:24px;background:var(--paper-warm);position:relative;overflow:hidden}
+.cost-bar-fill{
+  height:100%;background:var(--ink);position:relative;
+  display:flex;align-items:center;justify-content:flex-end;padding-right:8px;
+}
+.cost-bar-fill.accent{background:var(--accent)}
+.cost-bar-fill.gold{background:var(--gold)}
+.cost-bar-fill.teal{background:var(--teal)}
+.cost-bar-fill.muted{background:var(--muted)}
+.cost-bar-fill.good{background:var(--good)}
+.cost-bar-fill .pct{
+  font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--paper);font-weight:600;
+}
+.cost-row .amount{font-family:'JetBrains Mono',monospace;font-weight:600;text-align:right;font-size:.92rem}
+
+.pillar-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin:2rem 0}
+.pillar{
+  padding:2rem 1.8rem;background:var(--paper-warm);
+  border:1px solid var(--rule-light);border-top:3px solid var(--accent);
+}
+.pillar:nth-child(2){border-top-color:var(--gold)}
+.pillar:nth-child(3){border-top-color:var(--teal)}
+.pillar-icon{
+  font-family:'Fraunces',serif;font-size:2.2rem;font-style:italic;
+  color:var(--accent);font-weight:300;line-height:1;margin-bottom:.6rem;
+}
+.pillar:nth-child(2) .pillar-icon{color:var(--gold)}
+.pillar:nth-child(3) .pillar-icon{color:var(--teal)}
+.pillar h4{font-size:1.1rem;margin-bottom:.6rem;font-family:'Fraunces',serif;font-weight:500}
+.pillar p{font-size:.88rem;line-height:1.55}
+
+.refined-list{list-style:none;padding:0;margin:1rem 0}
+.refined-list li{
+  position:relative;padding:.55rem 0 .55rem 2rem;
+  border-bottom:1px solid var(--rule-light);font-size:.92rem;line-height:1.55;
+}
+.refined-list li::before{
+  content:'§';position:absolute;left:0;top:.55rem;
+  font-family:'Fraunces',serif;color:var(--accent);
+  font-style:italic;font-weight:500;
+}
+.refined-list li:last-child{border-bottom:none}
+
+.num-list{list-style:none;counter-reset:nl;padding:0;margin:1.5rem 0}
+.num-list li{
+  counter-increment:nl;position:relative;
+  padding:1rem 0 1rem 4rem;border-bottom:1px solid var(--rule-light);
+  font-size:.95rem;line-height:1.6;
+}
+.num-list li::before{
+  content:counter(nl,decimal-leading-zero);
+  position:absolute;left:0;top:1rem;
+  font-family:'Fraunces',serif;font-size:1.6rem;font-weight:300;font-style:italic;
+  color:var(--accent);line-height:1;width:3rem;text-align:right;padding-right:1rem;
+  border-right:1px solid var(--rule-light);
+}
+.num-list li strong{display:block;margin-bottom:.3rem;font-size:1.05rem;font-family:'Fraunces',serif;font-weight:500;font-style:normal}
+
+.detail-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:0;
+  margin:2.5rem 0;border:1px solid var(--rule-light);
+}
+.detail-card{
+  padding:1.6rem 1.8rem;
+  border-right:1px solid var(--rule-light);border-bottom:1px solid var(--rule-light);
+}
+.detail-card:nth-child(2n){border-right:none}
+.detail-card-num{
+  font-family:'Fraunces',serif;font-size:1.3rem;font-style:italic;
+  color:var(--accent);margin-bottom:.4rem;font-weight:500;
+}
+.detail-card h4{font-size:1.05rem;margin-bottom:.6rem;font-family:'Inter Tight',sans-serif;letter-spacing:0;text-transform:none;font-weight:600}
+.detail-card p{font-size:.86rem;line-height:1.55;color:#2a2f3a}
+.detail-card .meta{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--muted);margin-top:.7rem;letter-spacing:.04em}
+
+.aside{
+  font-family:'Fraunces',serif;font-style:italic;color:var(--muted);
+  font-size:.92rem;border-left:1px solid var(--rule-light);
+  padding:.4rem 0 .4rem 1.4rem;margin:1.5rem 0;line-height:1.55;
+}
+
+.divider-orn{
+  text-align:center;font-family:'Fraunces',serif;
+  font-size:1.6rem;color:var(--rule-light);
+  font-style:italic;letter-spacing:1.5em;padding:2rem 0 0 1.5em;
+}
+
+.cashflow-table{
+  width:100%;border-collapse:collapse;font-size:.82rem;
+  border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);
+  margin:2rem 0;
+}
+.cashflow-table th{
+  background:var(--paper-warm);
+  font-family:'JetBrains Mono',monospace;
+  font-size:.65rem;letter-spacing:.08em;text-transform:uppercase;
+  padding:.7rem .6rem;text-align:right;
+  border-bottom:1px solid var(--rule);font-weight:600;
+}
+.cashflow-table th:first-child{text-align:left}
+.cashflow-table td{
+  padding:.55rem .6rem;font-family:'JetBrains Mono',monospace;
+  text-align:right;border-bottom:1px solid var(--rule-light);font-size:.78rem;
+}
+.cashflow-table td:first-child{
+  font-family:'Inter Tight',sans-serif;text-align:left;
+  font-size:.85rem;font-weight:500;
+}
+.cashflow-table .neg{color:var(--accent)}
+.cashflow-table .pos{color:var(--good)}
+.cashflow-table tr.total td{
+  font-weight:700;background:var(--paper-warm);
+  border-top:2px solid var(--ink);
+}
+.cashflow-table tr.subtotal td{
+  background:rgba(168,51,42,.04);font-weight:600;
+}
+
+.bucket-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:0;
+  border-top:2px solid var(--ink);margin:2.5rem 0;
+}
+.bucket{
+  padding:2rem 1.8rem;border-right:1px solid var(--rule-light);
+  border-bottom:1px solid var(--rule-light);
+}
+.bucket:last-child{border-right:none}
+.bucket-num{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.72rem;color:var(--accent);
+  letter-spacing:.15em;margin-bottom:.6rem;font-weight:600;
+}
+.bucket-amount{
+  font-family:'Fraunces',serif;
+  font-size:2.4rem;font-weight:400;letter-spacing:-.02em;
+  color:var(--ink);margin-bottom:.4rem;line-height:1;
+}
+.bucket-amount .unit{font-size:.5em;color:var(--muted);font-style:italic;margin-left:.2em}
+.bucket h4{
+  font-family:'Fraunces',serif;font-size:1.15rem;
+  font-weight:500;margin-bottom:.6rem;
+}
+.bucket-meta{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.72rem;color:var(--muted);margin-bottom:.9rem;letter-spacing:.04em;
+}
+.bucket-body{font-size:.88rem;line-height:1.55;color:#2a2f3a}
+
+.risk-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.2rem;margin-top:2rem}
+.risk{
+  padding:1.4rem 1.6rem;border:1px solid var(--rule-light);
+  background:var(--paper);position:relative;
+}
+.risk-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:.8rem}
+.risk h5{font-size:1.05rem;text-transform:none;letter-spacing:0;font-family:'Fraunces',serif;font-weight:500}
+.risk-sev{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.65rem;padding:3px 8px;letter-spacing:.1em;
+  text-transform:uppercase;font-weight:600;
+}
+.risk-sev.high{background:var(--accent);color:var(--paper)}
+.risk-sev.med{background:var(--warn);color:var(--paper)}
+.risk-sev.low{background:var(--good);color:var(--paper)}
+.risk p{font-size:.85rem;color:#2a2f3a;line-height:1.55;margin-bottom:.6rem}
+.risk .mitig{font-size:.82rem;color:var(--muted);font-style:italic;border-top:1px dashed var(--rule-light);padding-top:.6rem;margin-top:.6rem;font-family:'Fraunces',serif}
+
+.arch-block{
+  background:var(--ink);color:var(--paper);
+  padding:2.5rem;margin:3rem -1rem;border-radius:0;
+  font-family:'JetBrains Mono',monospace;
+  font-size:.82rem;line-height:1.7;overflow-x:auto;
+}
+.arch-block .layer{
+  border:1px dashed rgba(244,241,234,.3);
+  padding:1rem 1.2rem;margin:.6rem 0;position:relative;
+}
+.arch-block .layer-label{
+  position:absolute;top:-.7rem;left:1rem;background:var(--ink);
+  padding:0 .6rem;font-size:.65rem;letter-spacing:.18em;
+  color:var(--gold);text-transform:uppercase;
+}
+.arch-block strong{color:var(--gold);font-weight:500}
+
+footer{background:var(--ink);color:var(--paper);padding:5rem 0 3rem;margin-top:3rem}
+footer .shell{display:grid;grid-template-columns:2fr 1fr 1fr;gap:3rem;align-items:start}
+footer h5{color:var(--gold);font-size:.78rem;margin-bottom:1rem;letter-spacing:.15em;font-family:'Inter Tight',sans-serif}
+footer p,footer li{font-size:.85rem;color:rgba(244,241,234,.75);line-height:1.7}
+footer ul{list-style:none;padding:0}
+footer li{padding:.3rem 0;border-bottom:1px solid rgba(244,241,234,.1)}
+footer .colophon{
+  border-top:1px solid rgba(244,241,234,.2);
+  padding-top:2rem;margin-top:3rem;
+  font-family:'JetBrains Mono',monospace;
+  font-size:.72rem;letter-spacing:.1em;
+  color:rgba(244,241,234,.5);
+  display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;
+}
+
+@media (max-width:880px){
+  .two-col{grid-template-columns:1fr;gap:1.5rem}
+  .two-col-label{position:static;border-top:1px solid var(--rule-light)}
+  .pillar-grid{grid-template-columns:1fr}
+  .risk-grid{grid-template-columns:1fr}
+  .toc-grid{grid-template-columns:1fr}
+  .cover-meta,.cover-headline-stat{grid-template-columns:repeat(2,1fr);gap:1.2rem}
+  .phase{grid-template-columns:1fr;gap:.8rem}
+  .phase-marker{text-align:left;position:static}
+  .phase-budget{grid-template-columns:1fr}
+  footer .shell{grid-template-columns:1fr}
+  .cost-row{grid-template-columns:1fr;gap:.6rem}
+  .topbar{flex-wrap:wrap;gap:.6rem}
+  .cashflow-table{font-size:.7rem}
+  .cashflow-table td{padding:.4rem .3rem;font-size:.7rem}
+}
+@media print{
+  .topbar{position:static}
+  section{break-inside:avoid;padding:2rem 0}
+  .arch-block{background:var(--paper-warm);color:var(--ink)}
+}
+</style>
+</head>
+<body>
+
+<div class="shell">
+<div class="topbar">
+  <div class="topbar-left">
+    <span>Quisitive Businesses LLP</span>
+    <span>·</span>
+    <span>DPR / AEGIS / 2026-Q2</span>
+  </div>
+  <div class="topbar-right">
+    <span>Rev. 1.0</span>
+    <span class="classification">Confidential</span>
+  </div>
+</div>
+</div>
+
+<div class="shell">
+<header class="cover">
+  <div class="cover-watermark">QUISITIVE · CONFIDENTIAL · 2026</div>
+  <div>
+    <div class="cover-doc">Detailed Project Report</div>
+    <h1 class="cover-title">AEGIS<br>NOC / SOC<br><span class="accent">Programme</span></h1>
+    <p class="cover-sub">A 36-month, four-phase, end-to-end build of an AI-native, sovereign-deployed network and security operations platform for Indian regulated industries — from incorporation through enterprise-grade general availability through to self-sustaining commercial operation. Total programme outlay Rs 13.50 crore, of which Rs 9 crore is the net external capital requirement after expected customer-revenue offset.</p>
+  </div>
+
+  <div class="cover-headline-stat">
+    <div class="cover-stat">
+      <div class="cover-stat-label">Total programme outlay</div>
+      <div class="cover-stat-value">13.50<span class="unit">cr</span></div>
+      <div class="cover-stat-sub">Build + run-to-breakeven + reserves</div>
+    </div>
+    <div class="cover-stat">
+      <div class="cover-stat-label">Net external capital</div>
+      <div class="cover-stat-value">9.00<span class="unit">cr</span></div>
+      <div class="cover-stat-sub">Seed Rs 2 Cr + Series A Rs 7 Cr</div>
+    </div>
+    <div class="cover-stat">
+      <div class="cover-stat-label">Programme horizon</div>
+      <div class="cover-stat-value">36<span class="unit">mo</span></div>
+      <div class="cover-stat-sub">Incorporation → cash-flow positive</div>
+    </div>
+  </div>
+
+  <dl class="cover-meta">
+    <div><dt>Document Reference</dt><dd>QSV/DPR/AEGIS/2026-05</dd></div>
+    <div><dt>Issuing Entity</dt><dd>Quisitive Businesses LLP</dd></div>
+    <div><dt>Project Code</dt><dd>AEGIS</dd></div>
+    <div><dt>Programme Window</dt><dd>M0 → M36 (36 months)</dd></div>
+    <div><dt>Build Cost (M0–M22)</dt><dd>Rs 5.40 Cr (4 phases)</dd></div>
+    <div><dt>Operations Runway (M22–M36)</dt><dd>Rs 6.80 Cr</dd></div>
+    <div><dt>Transaction &amp; Reserve Costs</dt><dd>Rs 1.30 Cr</dd></div>
+    <div><dt>Document Date</dt><dd>01 May 2026</dd></div>
+  </dl>
+</header>
+</div>
+
+<div class="shell">
+<section class="toc" style="border-bottom:none;padding:3rem 0">
+  <div class="toc-title">Contents</div>
+  <div class="toc-grid">
+    <a href="#sec-01" class="toc-item"><span class="toc-num">01</span><span>Executive summary &amp; capital thesis</span><span class="toc-page">p. 04</span></a>
+    <a href="#sec-02" class="toc-item"><span class="toc-num">02</span><span>Programme structure &amp; the Rs 13.50 Cr breakdown</span><span class="toc-page">p. 07</span></a>
+    <a href="#sec-03" class="toc-item"><span class="toc-num">03</span><span>Project rationale &amp; market context</span><span class="toc-page">p. 11</span></a>
+    <a href="#sec-04" class="toc-item"><span class="toc-num">04</span><span>Scope, deliverables &amp; product architecture</span><span class="toc-page">p. 14</span></a>
+    <a href="#sec-05" class="toc-item"><span class="toc-num">05</span><span>Phase 0 — Foundation &amp; validation</span><span class="toc-page">p. 18</span></a>
+    <a href="#sec-06" class="toc-item"><span class="toc-num">06</span><span>Phase 1 — Core MVP</span><span class="toc-page">p. 21</span></a>
+    <a href="#sec-07" class="toc-item"><span class="toc-num">07</span><span>Phase 2 — Pilot-ready product</span><span class="toc-page">p. 24</span></a>
+    <a href="#sec-08" class="toc-item"><span class="toc-num">08</span><span>Phase 3 — Enterprise-grade v1</span><span class="toc-page">p. 27</span></a>
+    <a href="#sec-09" class="toc-item"><span class="toc-num">09</span><span>Phase 4 — Post-GA operations to break-even</span><span class="toc-page">p. 31</span></a>
+    <a href="#sec-10" class="toc-item"><span class="toc-num">10</span><span>Infrastructure &amp; capacity build-out</span><span class="toc-page">p. 35</span></a>
+    <a href="#sec-11" class="toc-item"><span class="toc-num">11</span><span>Manpower &amp; organisational development</span><span class="toc-page">p. 38</span></a>
+    <a href="#sec-12" class="toc-item"><span class="toc-num">12</span><span>Compliance, certifications &amp; regulatory mapping</span><span class="toc-page">p. 42</span></a>
+    <a href="#sec-13" class="toc-item"><span class="toc-num">13</span><span>Financials, costing &amp; cash-flow schedule</span><span class="toc-page">p. 46</span></a>
+    <a href="#sec-14" class="toc-item"><span class="toc-num">14</span><span>Funding strategy &amp; capital sequencing</span><span class="toc-page">p. 51</span></a>
+    <a href="#sec-15" class="toc-item"><span class="toc-num">15</span><span>Revenue model &amp; commercial trajectory</span><span class="toc-page">p. 54</span></a>
+    <a href="#sec-16" class="toc-item"><span class="toc-num">16</span><span>Risk register &amp; mitigation strategy</span><span class="toc-page">p. 57</span></a>
+    <a href="#sec-17" class="toc-item"><span class="toc-num">17</span><span>Sensitivity analysis &amp; scenario modelling</span><span class="toc-page">p. 60</span></a>
+    <a href="#sec-18" class="toc-item"><span class="toc-num">18</span><span>Sustainability, monitoring &amp; exit pathways</span><span class="toc-page">p. 63</span></a>
+    <a href="#sec-19" class="toc-item"><span class="toc-num">19</span><span>Appendices &amp; references</span><span class="toc-page">p. 66</span></a>
+  </div>
+</section>
+</div>
+
+<div class="shell">
+<section id="sec-01">
+  <div class="section-num">Section 01 — Executive Summary</div>
+  <h2 class="section-title serif">A complete capital plan for AEGIS — from incorporation to self-sustaining commercial operation.</h2>
+  <p class="section-lede">This Detailed Project Report defines the engineering, infrastructure, organisational, regulatory, and financial scope required to deliver the AEGIS NOC/SOC platform from inception through the cash-flow-positive inflection point — a 36-month programme structured around five sequential phases with explicit gating and a total outlay of Rs 13.50 crore.</p>
+
+  <div class="two-col">
+    <div class="two-col-label">Capital thesis</div>
+    <div class="two-col-body dropcap">
+      <p>The AEGIS NOC/SOC platform is a sovereign-deployed, AI-native security operations platform engineered for Indian regulated industries — banking, financial services, insurance, capital markets, payments — where the combination of regulatory weight, data-residency requirements, and adversary sophistication has rendered hyperscaler-cloud-native security platforms structurally inadequate. This Detailed Project Report defines the engineering, infrastructure, organisational, regulatory, and financial scope required to deliver the platform from inception through the cash-flow-positive inflection point — a single thirty-six-month capital deployment from incorporation through to the moment at which monthly customer revenue exceeds monthly burn.</p>
+      <p>The reason this document scopes the entire thirty-six-month arc rather than a narrower build-phase window is that the most operationally expensive period of the programme is not the build itself but the fourteen-month interval between general availability and revenue self-sufficiency. A capital plan that ends at general availability ignores the period during which the company must continue to fund a twenty-two-person team while customer revenue ramps from a handful of pilot conversions to a self-sustaining annual run-rate. The correct unit of analysis for an institutional capital plan is the full arc to the commercial inflection point.</p>
+      <p>The total outlay is Rs 13.50 crore, decomposed across four cost categories. The build cost from month zero through enterprise-grade general availability is Rs 5.40 crore — Rs 0.20 crore for foundation and validation, Rs 0.50 crore for the core minimum viable product, Rs 0.85 crore for the pilot-ready product release, and Rs 3.85 crore for the enterprise-grade productionisation programme during which all six AEGIS machine-learning models reach production status and all six AlgoForge product modules reach general availability. The post-general-availability operations runway from month twenty-two through month thirty-six is Rs 6.80 crore and represents the largest single category in the programme — compensation continues to dominate the cost stack as the team operates the platform for paying customers, refreshes annual certifications, and develops the commercial pipeline. The transaction and reserve costs aggregate Rs 1.30 crore, comprising Series A round closing fees, ongoing legal and counsel work, and a working-capital buffer sized at five per cent of total outlay against unbudgeted operational events.</p>
+      <p>The net external capital requirement is materially smaller than the gross outlay. Customer pilot revenue beginning at month eight, ramping through pilot conversion at month fourteen, and accelerating after general availability is conservatively projected to recognise Rs 4.50 crore over the programme window. Subtracting expected revenue from gross outlay yields a net capital requirement of Rs 9.00 crore — structured as approximately Rs 2 crore in seed and founders' capital largely already deployed, plus a Rs 7 crore Series A institutional round targeted to close at month twenty-four against the strength of three reference paid customers and a Rs 3.92 crore base-case annual recurring revenue trajectory.</p>
+      <p>The financial structure is anchored to operational reality rather than aspiration. Quisitive Businesses LLP holds three concurrently issued ISO management-system certifications dated twenty-seventh of February 2026 — ISO/IEC 27001:2022 information security, ISO 9001:2015 quality, and ISO/IEC 20000-1:2018 IT service management — covering end-to-end NOC services, SOC managed services, and cloud services from the registered facility at the Artha Special Economic Zone in Greater Noida. SOC 2 Type II attestation across all five Trust Services Criteria is in active processing. The Rs 3.85 crore high-performance compute installation that hosts the platform is already deployed: 128 Xeon Sapphire Rapids cores, 1.4 TB of DDR5-ECC memory, 23 TB of SAN-class solid-state storage, a FortiGate 120G high-availability pair, and four NVIDIA A100 80 GB graphical processing units. The platform is not being designed against an imagined infrastructure; it is being engineered against measured infrastructure already racked, commissioned, and producing telemetry.</p>
+    </div>
+  </div>
+
+  <div class="kpi-row">
+    <div class="kpi">
+      <div class="kpi-label">Gross Outlay</div>
+      <div class="kpi-value">13.50<span class="unit">cr</span></div>
+      <div class="kpi-sub">Build + run + reserves over 36 months</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Build (M0–M22)</div>
+      <div class="kpi-value">5.40<span class="unit">cr</span></div>
+      <div class="kpi-sub">4 phases · zero to GA</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Run-to-breakeven</div>
+      <div class="kpi-value">6.80<span class="unit">cr</span></div>
+      <div class="kpi-sub">M22 to M36 operations</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Reserves &amp; transaction</div>
+      <div class="kpi-value">1.30<span class="unit">cr</span></div>
+      <div class="kpi-sub">Series A fees + working capital</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Revenue Offset</div>
+      <div class="kpi-value">4.50<span class="unit">cr</span></div>
+      <div class="kpi-sub">Conservative pilot + ARR build</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Net Capital Need</div>
+      <div class="kpi-value">9.00<span class="unit">cr</span></div>
+      <div class="kpi-sub">Seed Rs 2 Cr + Series A Rs 7 Cr</div>
+    </div>
+  </div>
+
+  <div class="callout dark">
+    <div class="callout-label">The capital-plan distinction</div>
+    <p>A build-cost number tells you what it costs to <em>make</em> the product. A capital-plan number tells you what it costs to <em>survive long enough for the product to make money</em>. The Rs 5.40 crore build cost is necessary but not sufficient — without the additional Rs 8.10 crore that funds team operation through customer revenue ramp, certifications refresh, sales pipeline development, and the working-capital buffer that absorbs unbudgeted operational events, the build investment never reaches its commercial inflection. The Rs 13.50 crore figure represents the honest full-arc capital plan from incorporation to commercial self-sufficiency.</p>
+  </div>
+
+  <h3 class="serif" style="margin-top:3.5rem;margin-bottom:1rem">Three pillars of the capital plan</h3>
+
+  <div class="pillar-grid">
+    <div class="pillar">
+      <div class="pillar-icon">α</div>
+      <h4>Build to general availability</h4>
+      <p>Four sequential phases over twenty-two months — foundation, core MVP, pilot-ready, enterprise-grade v1 — each with explicit exit gating. Cumulative outlay Rs 5.40 crore. Outputs: six AEGIS production models, six AlgoForge applications, ISO and SOC 2 attestations, three reference customer accounts.</p>
+    </div>
+    <div class="pillar">
+      <div class="pillar-icon">β</div>
+      <h4>Operate to break-even</h4>
+      <p>Fourteen months of post-GA operation through month thirty-six. Outlay Rs 6.80 crore covering compensation continuation, infrastructure expansion as customer count grows past five concurrent, annual certification refreshes, sales pipeline investment, customer success scale-out. Inflection: monthly revenue exceeds monthly burn at approximately month thirty-two.</p>
+    </div>
+    <div class="pillar">
+      <div class="pillar-icon">γ</div>
+      <h4>Capitalise the structure</h4>
+      <p>Reserve and transaction outlay Rs 1.30 crore comprising Series A closing fees at four to seven per cent of round size, ongoing legal and regulatory counsel, and a working-capital buffer of approximately five per cent of total programme outlay sized against unbudgeted operational events. Funding sequence: Rs 2 crore seed largely deployed, Rs 7 crore Series A targeted at month twenty-four against three reference accounts.</p>
+    </div>
+  </div>
+</section>
+</div>
+
+<div class="shell">
+<section id="sec-02">
+  <div class="section-num">Section 02 — Programme Structure</div>
+  <h2 class="section-title serif">The Rs 13.50 crore decomposition. Where every rupee goes.</h2>
+  <p class="section-lede">A capital plan that is honest about the size of each cost bucket — and about which buckets reduce headcount and which do not — is more useful to investors and to internal programme management than one that conceals operational continuity costs inside generic line items. The decomposition below traces every rupee from category through phase through individual line item.</p>
+
+  <h3 class="serif" style="margin-top:1rem;margin-bottom:1rem">First-level decomposition — by cost category</h3>
+
+  <div class="bucket-grid">
+    <div class="bucket">
+      <div class="bucket-num">Bucket 01</div>
+      <div class="bucket-amount">5.40<span class="unit">cr</span></div>
+      <h4>Build cost</h4>
+      <div class="bucket-meta">Months 0–22 · 4 phases</div>
+      <p class="bucket-body">Zero to enterprise-grade general availability. Compensation for the team scaling from three to twenty-two FTE. Infrastructure augmentation on top of the existing Rs 3.85 Cr installation. ISO and SOC 2 audit fees. Pre-GA penetration testing. Threat-intelligence licences. The most expensive of the four build phases is Phase 3 at Rs 3.85 crore — the productionisation programme during which all six AEGIS models pass the six-gate governance framework into champion status and all six AlgoForge products reach general-availability quality with regulator-defensibility hardening.</p>
+    </div>
+    <div class="bucket">
+      <div class="bucket-num">Bucket 02</div>
+      <div class="bucket-amount">6.80<span class="unit">cr</span></div>
+      <h4>Operations runway</h4>
+      <div class="bucket-meta">Months 22–36 · 14 months</div>
+      <p class="bucket-body">Post-general-availability operations through cash-flow break-even. Compensation dominates at Rs 4.80 crore. Infrastructure expansion (capacity beyond five concurrent customers, second-region disaster recovery) Rs 0.85 crore. Annual SOC 2 Type II refresh, ISO surveillance audits, CERT-In empanelment Rs 0.40 crore. Sales and go-to-market scale-out Rs 0.55 crore. Continuing legal, regulatory, and threat-intelligence Rs 0.20 crore. This bucket is the largest in the programme.</p>
+    </div>
+    <div class="bucket">
+      <div class="bucket-num">Bucket 03</div>
+      <div class="bucket-amount">1.30<span class="unit">cr</span></div>
+      <h4>Transaction &amp; reserves</h4>
+      <div class="bucket-meta">Distributed across programme</div>
+      <p class="bucket-body">Series A closing costs (legal counsel, due-diligence response, banker fees) at four to seven per cent of a Rs 7–10 crore round, conservatively budgeted at Rs 0.55 crore. Working-capital reserve sized at approximately Rs 0.75 crore against unbudgeted operational events: emergency penetration-test remediation, above-band counter-offers to retain key engineers, unscheduled regulatory clarifications. This bucket is small in absolute terms but indispensable — without it, the first surprise becomes a programme-ending event.</p>
+    </div>
+  </div>
+
+  <h3 class="serif" style="margin-top:3rem;margin-bottom:1rem">Second-level decomposition — by line item</h3>
+
+  <div class="cost-breakdown">
+    <div class="cost-row">
+      <div class="label">Compensation (M0 → M36)<span class="sub">All FTE growth from 3 to 22 plus 14 post-GA months at peak</span></div>
+      <div class="cost-bar"><div class="cost-bar-fill" style="width:59.3%"><span class="pct">59.3%</span></div></div>
+      <div class="amount">Rs 8.00 Cr</div>
+    </div>
+    <div class="cost-row">
+      <div class="label">Infrastructure &amp; tooling<span class="sub">Build augmentation Rs 1.30 Cr + post-GA expansion Rs 0.85 Cr</span></div>
+      <div class="cost-bar"><div class="cost-bar-fill muted" style="width:15.9%"><span class="pct">15.9%</span></div></div>
+      <div class="amount">Rs 2.15 Cr</div>
+    </div>
+    <div class="cost-row">
+      <div class="label">Audits &amp; compliance<span class="sub">SOC 2 Type II (twice) + ISO surveillance (twice) + CERT-In + DPDP advisory + threat-intel licences + pen-tests</span></div>
+      <div class="cost-bar"><div class="cost-bar-fill accent" style="width:11.1%"><span class="pct">11.1%</span></div></div>
+      <div class="amount">Rs 1.50 Cr</div>
+    </div>
+    <div class="cost-row">
+      <div class="label">Sales &amp; go-to-market<span class="sub">Conferences · paid media · BFSI relationship investment · pipeline development</span></div>
+      <div class="cost-bar"><div class="cost-bar-fill gold" style="width:5.6%"><span class="pct">5.6%</span></div></div>
+      <div class="amount">Rs 0.75 Cr</div>
+    </div>
+    <div class="cost-row">
+      <div class="label">Reserve &amp; working capital<span class="sub">Unbudgeted operational contingency at 5.6% of total programme outlay</span></div>
+      <div class="cost-bar"><div class="cost-bar-fill good" style="width:5.6%"><span class="pct">5.6%</span></div></div>
+      <div class="amount">Rs 0.75 Cr</div>
+    </div>
+    <div class="cost-row">
+      <div class="label">Legal · contracts · transaction<span class="sub">MSA/DPA/SLA templates · Series A legal · ongoing counsel · regulatory advisory</span></div>
+      <div class="cost-bar"><div class="cost-bar-fill teal" style="width:2.6%"><span class="pct">2.6%</span></div></div>
+      <div class="amount">Rs 0.35 Cr</div>
+    </div>
+  </div>
+
+  <p class="aside">Compensation alone accounts for nearly six of every ten rupees in the programme — the dominant variable. This is structural, not incidental. A security platform of this scope cannot be built or operated without senior infrastructure, machine-learning, and product engineering talent at NCR market rates; any cost-engineering exercise that does not directly address compensation will not move the total meaningfully.</p>
+
+  <h3 class="serif" style="margin-top:3rem;margin-bottom:1rem">Third-level decomposition — by phase</h3>
+
+  <div class="tbl-wrap">
+  <table class="dpr">
+    <caption>Table 02·A — Programme outlay by phase</caption>
+    <thead>
+      <tr>
+        <th>Phase</th>
+        <th>Window</th>
+        <th>Headcount peak</th>
+        <th class="num">Compensation</th>
+        <th class="num">Infrastructure</th>
+        <th class="num">Audit/compl.</th>
+        <th class="num">Other</th>
+        <th class="num">Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Phase 0 · Foundation</td>
+        <td>M0–M2</td>
+        <td class="num">3</td>
+        <td class="num">Rs 0.12 Cr</td>
+        <td class="num">Rs 0.02 Cr</td>
+        <td class="num">Rs 0.01 Cr</td>
+        <td class="num">Rs 0.05 Cr</td>
+        <td class="num">Rs 0.20 Cr</td>
+      </tr>
+      <tr>
+        <td>Phase 1 · Core MVP</td>
+        <td>M2–M8</td>
+        <td class="num">5</td>
+        <td class="num">Rs 0.36 Cr</td>
+        <td class="num">Rs 0.06 Cr</td>
+        <td class="num">Rs 0.03 Cr</td>
+        <td class="num">Rs 0.05 Cr</td>
+        <td class="num">Rs 0.50 Cr</td>
+      </tr>
+      <tr>
+        <td>Phase 2 · Pilot-ready</td>
+        <td>M8–M14</td>
+        <td class="num">7</td>
+        <td class="num">Rs 0.54 Cr</td>
+        <td class="num">Rs 0.10 Cr</td>
+        <td class="num">Rs 0.12 Cr</td>
+        <td class="num">Rs 0.09 Cr</td>
+        <td class="num">Rs 0.85 Cr</td>
+      </tr>
+      <tr>
+        <td>Phase 3 · Enterprise v1</td>
+        <td>M14–M22</td>
+        <td class="num">22</td>
+        <td class="num">Rs 1.82 Cr</td>
+        <td class="num">Rs 1.02 Cr</td>
+        <td class="num">Rs 0.55 Cr</td>
+        <td class="num">Rs 0.46 Cr</td>
+        <td class="num">Rs 3.85 Cr</td>
+      </tr>
+      <tr class="subtotal">
+        <td><strong>Build subtotal (M0–M22)</strong></td>
+        <td>22 months</td>
+        <td class="num">22</td>
+        <td class="num"><strong>Rs 2.84 Cr</strong></td>
+        <td class="num"><strong>Rs 1.20 Cr</strong></td>
+        <td class="num"><strong>Rs 0.71 Cr</strong></td>
+        <td class="num"><strong>Rs 0.65 Cr</strong></td>
+        <td class="num"><strong>Rs 5.40 Cr</strong></td>
+      </tr>
+      <tr>
+        <td>Phase 4 · Operations runway</td>
+        <td>M22–M36</td>
+        <td class="num">26</td>
+        <td class="num">Rs 4.80 Cr</td>
+        <td class="num">Rs 0.85 Cr</td>
+        <td class="num">Rs 0.40 Cr</td>
+        <td class="num">Rs 0.75 Cr</td>
+        <td class="num">Rs 6.80 Cr</td>
+      </tr>
+      <tr>
+        <td>Transaction &amp; reserves</td>
+        <td>Distributed</td>
+        <td class="num">—</td>
+        <td class="num">Rs 0.36 Cr</td>
+        <td class="num">Rs 0.10 Cr</td>
+        <td class="num">Rs 0.39 Cr</td>
+        <td class="num">Rs 0.45 Cr</td>
+        <td class="num">Rs 1.30 Cr</td>
+      </tr>
+      <tr class="total">
+        <td><strong>Programme total</strong></td>
+        <td><strong>36 months</strong></td>
+        <td class="num"><strong>26 peak</strong></td>
+        <td class="num"><strong>Rs 8.00 Cr</strong></td>
+        <td class="num"><strong>Rs 2.15 Cr</strong></td>
+        <td class="num"><strong>Rs 1.50 Cr</strong></td>
+        <td class="num"><strong>Rs 1.85 Cr</strong></td>
+        <td class="num"><strong>Rs 13.50 Cr</strong></td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p class="aside">The "Other" column aggregates sales and go-to-market spend, working-capital reserve, legal and transaction costs, and contingency. Phase 4 carries the largest "Other" figure because sales investment scales materially after general availability, when the product is finally ready to be sold to customers other than the original pilots.</p>
+</section>
+</div>
+
+<div class="shell">
+<section id="sec-03">
+  <div class="section-num">Section 03 — Project Rationale</div>
+  <h2 class="section-title serif">Why a 36-month full-cycle programme rather than a v1-only build.</h2>
+  <p class="section-lede">A capital plan that ends at general availability assumes that the product, once built, will generate revenue fast enough to fund ongoing operations from its first month of commercial sale. That assumption is incorrect for Indian BFSI cybersecurity and dangerous to make uncritically.</p>
+
+  <div class="two-col">
+    <div class="two-col-label">The case for full-cycle funding</div>
+    <div class="two-col-body">
+      <p>Indian banking, financial services, and insurance procurement cycles span six to twelve months even for signed pilot relationships, and twelve to twenty-four months for tier-one bank deployments. A platform that reaches general availability at month twenty-two will not see meaningful annual recurring revenue accretion until month twenty-six at earliest, with conservative scenarios placing material ARR scale at month thirty-two or beyond. The fourteen months between general availability and revenue self-sufficiency are the most operationally expensive period of the programme — twenty-two-plus FTE on payroll, infrastructure expanding to support paying customers, annual certification cycles refreshing, sales investment ramping to develop pipeline. A programme funded only through general availability runs out of capital precisely when commercial validation begins to arrive, forcing emergency bridge financing on terms that are materially worse than capital raised on schedule against a planned milestone.</p>
+      <p>The alternative — funding the full thirty-six-month cycle in advance — produces three structural advantages. First, it removes the capital-shortage risk from the operational team's attention budget; engineers and sales leaders focus on the work, not on the next round. Second, it allows the Series A round to close on the schedule that is commercially optimal (against three reference customers and demonstrated annual recurring revenue trajectory) rather than the schedule that is forced by cash exhaustion. Third, it forces honest scoping of the operations period — the second-largest cost bucket in the programme — into the formal capital plan rather than treating it as a problem for future fundraising.</p>
+      <p>The financial logic of full-cycle funding is straightforward: the difference between the build cost (Rs 5.40 crore) and the full programme outlay (Rs 13.50 crore) is Rs 8.10 crore, of which Rs 4.50 crore is offset by expected customer revenue over the same window. The genuine incremental capital ask is Rs 3.60 crore — the cost of buying fourteen months of operating runway through to cash-flow break-even rather than gambling on revenue arriving before capital exhausts. That incremental Rs 3.60 crore is the single best risk-management investment in the programme.</p>
+    </div>
+  </div>
+
+  <div class="callout">
+    <div class="callout-label">Quisitive-specific advantages</div>
+    <p>The Rs 13.50 crore total is materially smaller than what an equivalent green-field competitor would face. The Rs 3.85 crore Greater Noida high-performance compute installation is already deployed and amortising — a green-field competitor would carry an additional Rs 6.5–8 crore of infrastructure capex. The three ISO certifications dated February 2026 reduce the SOC 2 Type II audit timeline by approximately four months and the audit fee by approximately fifteen per cent. The shared LLP back-office (finance, HR, compliance, legal counsel) cost-allocates across three verticals rather than burdening cybersecurity alone. Including these advantages, an equivalent green-field cybersecurity startup pursuing the same scope would face a programme outlay of approximately Rs 22–25 crore — Quisitive's structural cost advantage is between Rs 8 and Rs 11 crore against new entrants.</p>
+  </div>
+</section>
+</div>
+
+<div class="shell">
+<section id="sec-04">
+  <div class="section-num">Section 04 — Scope &amp; Architecture</div>
+  <h2 class="section-title serif">Six AEGIS models. Six AlgoForge applications. One sovereign data plane.</h2>
+  <p class="section-lede">The AEGIS platform is structured around two interlocking technical assets — a six-model machine-learning engine providing detection, classification, and prediction primitives, and a six-product application suite that packages those primitives for distinct buyer audiences within the customer organisation. The architecture is sovereign-deployable, multi-tenant by design, and engineered against the regulatory framework that governs Indian banking, financial services, insurance, and capital markets.</p>
+
+  <h3 class="serif" style="margin-top:1.5rem;margin-bottom:1rem">AEGIS engine — six production machine-learning models</h3>
+
+  <div class="tbl-wrap">
+  <table class="dpr">
+    <caption>Table 04·A — AEGIS model summary</caption>
+    <thead>
+      <tr><th style="width:22%">Model</th><th>Architecture</th><th>Primary detection problem</th><th style="width:18%">Retraining</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>M01 · Anomaly</td><td>VAE + Isolation Forest + LSTM</td><td>Network flow / endpoint / authentication unsupervised deviation</td><td>Monthly + drift</td></tr>
+      <tr><td>M02 · Classification</td><td>1D-CNN + GBT + Transformer</td><td>Malware family · phishing · ATT&amp;CK technique · severity</td><td>Quarterly</td></tr>
+      <tr><td>M03 · NLP / CTI</td><td>LLaMA 3.1 + Qwen 2 · LoRA · RAG</td><td>Threat intelligence summarisation · IOC extraction</td><td>Weekly (CTI corpus)</td></tr>
+      <tr><td>M04 · Correlation</td><td>Rule DSL + GraphSAGE + GBT weighting</td><td>Multi-source incident reasoning · case generation</td><td>Monthly + analyst feedback</td></tr>
+      <tr><td>M05 · UEBA</td><td>GMM + LSTM + peer-group</td><td>Insider threat · compromised credentials · LOTL</td><td>Monthly</td></tr>
+      <tr><td>M06 · Predictive</td><td>XGBoost + GNN context</td><td>Exploit-probability forecasting per CVE-environment</td><td>Quarterly</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3 class="serif" style="margin-top:2rem;margin-bottom:1rem">AlgoForge — six product modules</h3>
+
+  <div class="tbl-wrap">
+  <table class="dpr">
+    <caption>Table 04·B — AlgoForge product summary</caption>
+    <thead>
+      <tr><th style="width:22%">Product</th><th>Category</th><th>Primary buyer</th><th>AEGIS models consumed</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>P01 · ForgeShield</td><td>Fraud &amp; AML</td><td>Chief Risk Officer · Head of Fraud</td><td>M01 · M04 · M05</td></tr>
+      <tr><td>P02 · ForgeSentinel</td><td>Network Detection &amp; Response</td><td>Head of Network Security · SOC Lead</td><td>M01 · M02 · M04</td></tr>
+      <tr><td>P03 · ForgeVault</td><td>Cloud Security Posture Management</td><td>Cloud Platform Lead · CISO</td><td>M02 · M04 · M06</td></tr>
+      <tr><td>P04 · ForgeSOC</td><td>Extended Detection &amp; Response</td><td>SOC Lead · CISO</td><td>All six</td></tr>
+      <tr><td>P05 · ForgeIntel</td><td>Threat Intelligence</td><td>Threat Intel Lead · CISO office</td><td>M03 · M06</td></tr>
+      <tr><td>P06 · ForgeIdentity</td><td>Zero Trust Architecture</td><td>IAM Lead · CISO</td><td>M04 · M05</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p class="aside">Each AlgoForge product addresses a discrete buying centre within the customer organisation but consumes a shared subset of AEGIS engine outputs through a common inference fabric — the architecture deliberately separates the buyer-facing application surface from the underlying machine-learning compute, allowing the customer to enter via any single product and expand into others without re-onboarding data, identity, or compliance posture.</p>
+
+  <h3 class="serif" style="margin-top:2.5rem;margin-bottom:1rem">Five-plane technical architecture</h3>
+
+  <p>The AEGIS platform is structured as five horizontal planes, each with explicit boundaries, contracts, and isolation guarantees. The plane separation is the architectural foundation for multi-tenant safety, model-output explainability, and regulatory-audit traceability — three properties that hyperscaler-cloud-native security platforms achieve only inconsistently and at a structural cost premium that does not survive Indian BFSI procurement economics.</p>
+
+  <div class="arch-block">
+    <div class="layer">
+      <div class="layer-label">Plane 1 · Ingest &amp; normalisation</div>
+<strong>Edge collectors</strong> · Suricata IDS/IPS sensors · Wazuh agents · Filebeat/Fluentd shippers · NetFlow/sFlow exporters · cloud-native API integrations (AWS CloudTrail, Azure Activity, GCP Audit). <strong>Stream broker</strong> · Apache Kafka 3-broker quorum on NVMe storage · sustained 50,000 events-per-second per broker. <strong>Normalisation</strong> · Vector-based field mapping to OCSF (Open Cybersecurity Schema Framework) v1.1 · timestamp canonicalisation · field enrichment with asset metadata.
+    </div>
+    <div class="layer">
+      <div class="layer-label">Plane 2 · Data &amp; storage</div>
+<strong>Hot store</strong> · OpenSearch cluster with hot/warm/cold tier separation · 30-day rolling hot retention. <strong>Warm/cold</strong> · S3-API compatible object store (MinIO behind WAL retention) · 90-day warm · 7-year cold WORM. <strong>Graph store</strong> · Neo4j community for entity-relationship modelling · GraphSAGE feature export. <strong>Per-customer isolation</strong> · separate namespace · separate encryption key (HSM-backed) · separate index lifecycle policy.
+    </div>
+    <div class="layer">
+      <div class="layer-label">Plane 3 · Inference &amp; ML</div>
+<strong>Model serving</strong> · NVIDIA Triton Inference Server on A100/L40S GPU pool · gRPC ingress · 4,000+ EPS sustained per inference node. <strong>Feature store</strong> · Feast on Redis hot cache + S3 offline store · point-in-time correctness for training-serving consistency. <strong>Model registry</strong> · MLflow with 6-gate governance enforcement · champion/challenger automation · drift monitoring with Evidently AI. <strong>Six AEGIS models</strong> served as independent gRPC endpoints with explicit version pinning per customer.
+    </div>
+    <div class="layer">
+      <div class="layer-label">Plane 4 · Application &amp; orchestration</div>
+<strong>Six AlgoForge products</strong> as independent web applications · React + TypeScript frontend · Go and Python microservices backend. <strong>SOAR engine</strong> · custom orchestrator on Temporal.io for stateful workflow · 47-playbook library at GA · YAML-defined playbooks with Python action handlers. <strong>Case management</strong> · per-customer incident workspace · MITRE ATT&amp;CK technique pivot · entity-graph timeline reconstruction · investigator-facing explanation surface.
+    </div>
+    <div class="layer">
+      <div class="layer-label">Plane 5 · Management &amp; control</div>
+<strong>Identity</strong> · Keycloak for federated SSO · SAML 2.0 / OIDC · per-customer realm. <strong>Secrets &amp; KMS</strong> · HashiCorp Vault backed by FortiAuthenticator HSM · per-customer key isolation · automated rotation. <strong>Observability</strong> · Prometheus + Grafana + Loki + Tempo on dedicated cluster · platform telemetry separated from customer telemetry. <strong>Audit</strong> · immutable audit log to WORM storage · regulator-readable export pipeline · annual SOC 2 evidence-collection automation.
+    </div>
+  </div>
+
+  <h3 class="serif" style="margin-top:2.5rem;margin-bottom:1rem">AEGIS engine — six-gate model governance framework</h3>
+
+  <p>Every AEGIS production model passes a deterministic six-gate review before reaching champion status, before each retraining-driven version advance, and before each customer-specific deployment. The framework is the structural mechanism by which the platform achieves regulator-defensibility — a property that distinguishes it from machine-learning-as-a-feature competitors that rely on documentation alone for explainability.</p>
+
+  <div class="tbl-wrap">
+  <table class="dpr">
+    <caption>Table 04·C — Six-gate model governance</caption>
+    <thead>
+      <tr><th style="width:14%">Gate</th><th style="width:24%">Name</th><th>Validation criteria</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>G1</td><td>Data lineage &amp; provenance</td><td>Training data sources documented · licensing verified · per-record provenance traceable · personal-data exposure audit clean per DPDP Act</td></tr>
+      <tr><td>G2</td><td>Performance benchmark</td><td>Held-out test set TPR/FPR/precision/recall meets pre-defined threshold · latency p99 within budget · resource utilisation within envelope</td></tr>
+      <tr><td>G3</td><td>Drift sensitivity &amp; robustness</td><td>Adversarial test suite passed · synthetic distribution-shift performance documented · degradation envelope quantified</td></tr>
+      <tr><td>G4</td><td>Explainability</td><td>SHAP / LIME / attention-attribution surfaces validated by analyst panel · counterfactual explanations for top-decile alerts · feature-importance documented</td></tr>
+      <tr><td>G5</td><td>Bias &amp; fairness</td><td>Per-protected-attribute slicing · disparate-impact metric within tolerance · documented mitigations for identified disparities</td></tr>
+      <tr><td>G6</td><td>Production readiness</td><td>Inference-server load tested · rollback procedure validated · monitoring dashboards live · incident-response runbook in place</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3 class="serif" style="margin-top:2.5rem;margin-bottom:1rem">Per-customer isolation architecture</h3>
+
+  <p>The platform's defence-in-depth tenant-isolation architecture spans six control layers. Cross-tenant data exposure due to misconfiguration or implementation defect is the single most consequential risk in a multi-tenant security platform; the architectural commitment is that no single-layer failure can produce a cross-tenant breach.</p>
+
+  <ol class="num-list">
+    <li><strong>Network plane.</strong> Per-customer Kubernetes namespace with NetworkPolicy enforcement. Egress restricted to customer-specific allow-list. East-west traffic between customer pods is denied by default; explicit allow rules required per integration.</li>
+    <li><strong>Compute plane.</strong> Pod-level resource quotas. Per-customer service accounts with least-privilege RBAC. No shared workload across tenants — even shared-infrastructure components (Kafka, OpenSearch) operate under per-tenant authentication contexts.</li>
+    <li><strong>Storage plane.</strong> Per-customer storage volumes with separate encryption keys. Object-store buckets per customer with bucket-policy denying cross-account access. WORM-bucket configuration for audit log immutability.</li>
+    <li><strong>Identity plane.</strong> Per-customer Keycloak realm with realm-isolation enforcement. No cross-realm trust. Per-customer SAML/OIDC integrations with customer's own identity provider.</li>
+    <li><strong>Application plane.</strong> Tenant context propagation through all microservice calls. Tenant identifier cryptographically bound to request via JWT claim. Cross-tenant query attempts logged and alerted.</li>
+    <li><strong>Audit plane.</strong> Per-customer audit log streams to immutable WORM storage. Regulator-readable export pipeline operates per-customer with no implicit cross-customer access.</li>
+  </ol>
+
+  <p class="aside">Cross-tenant exposure remains the existential operational risk; the six-layer architecture reduces it but does not eliminate it. Defence-in-depth is augmented by an isolation regression suite of two hundred-plus test cases that gates every release, an external penetration test specifically targeting cross-tenant exposure, and cyber-liability insurance scaled to Rs 50 crore from Phase 3 onwards.</p>
+</section>
+</div>
+
+<div class="shell">
+<section id="sec-05">
+  <div class="section-num">Section 05 — Phase 0</div>
+  <h2 class="section-title serif">Foundation &amp; validation.</h2>
+  <p class="section-lede">The first two months of the programme establish the team, the design partners, the architecture commitment, and the funding sequence. Phase 0 is the cheapest phase but the highest-leverage one — every subsequent phase inherits or compounds the decisions made here.</p>
+
+  <div class="phase-budget">
+    <div class="phase-budget-cell">
+      <div class="phase-budget-label">Window</div>
+      <div class="phase-budget-value">M0 – M2</div>
+    </div>
+    <div class="phase-budget-cell">
+      <div class="phase-budget-label">Headcount peak</div>
+      <div class="phase-budget-value">3 FTE</div>
+    </div>
+    <div class="phase-budget-cell">
+      <div class="phase-budget-label">Phase outlay</div>
+      <div class="phase-budget-value">Rs 0.20 Cr</div>
+    </div>
+  </div>
+
+  <h3 class="serif" style="margin-top:2rem;margin-bottom:1rem">Phase 0 deliverables</h3>
+
+  <ul class="refined-list">
+    <li><strong>Founding team locked.</strong> Vertical Head Cybersecurity with profit-and-loss responsibility and BFSI sales background. ML lead with production cybersecurity ML experience. Senior product engineer with security-platform background. The ML lead and Vertical Head are the two non-negotiable hires; without both, Phase 1 does not begin.</li>
+    <li><strong>Design partners signed.</strong> Two to three letter-of-intent agreements with prospective Indian BFSI customers — typically tier-2 banks, payments aggregators, or fintech lenders — committing to evaluate the platform in pilot. LOIs are non-binding but they validate the buyer commitment that gates Phase 1 funding.</li>
+    <li><strong>Architecture commitment frozen.</strong> The five-plane architecture (ingest, data, inference, application, management) finalised. Open-source stack decisions ratified — Wazuh for endpoint, ELK for log aggregation, Suricata for network sensors, MISP for threat intelligence, Kafka for streaming, OpenSearch for hot store. Architecture review by external reviewer with BFSI deployment experience.</li>
+    <li><strong>Pre-seed capital raised.</strong> Rs 0.20–0.30 Cr from founders' working capital plus angel network. Series-Seed term sheet conversations initiated against design partner LOIs and architecture commitment.</li>
+    <li><strong>Legal entity scaffolded.</strong> LLP subsidiary structure for the cybersecurity vertical confirmed; ESOP pool established; founder share allocations executed; banking and accounting infrastructure operational.</li>
+  </ul>
+
+  <h3 class="serif" style="margin-top:2rem;margin-bottom:1rem">Phase 0 cost detail</h3>
+
+  <div class="tbl-wrap">
+  <table class="dpr">
+    <thead>
+      <tr><th>Line item</th><th class="num">Amount</th><th>Notes</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Compensation (3 FTE × 2 months)</td><td class="num">Rs 12 L</td><td>Founder discount applied; partial compensation in equity</td></tr>
+      <tr><td>Infrastructure baseline</td><td class="num">Rs 2 L</td><td>Cloud sandbox · development tooling · GitLab self-hosted licence</td></tr>
+      <tr><td>Legal &amp; entity setup</td><td class="num">Rs 3 L</td><td>LLP subsidiary · ESOP scheme · MSA template drafting</td></tr>
+      <tr><td>Architecture review &amp; design</td><td class="num">Rs 2 L</td><td>External BFSI architect contracted for review and validation</td></tr>
+      <tr><td>Travel &amp; LOI engagement</td><td class="num">Rs 1 L</td><td>Pre-pilot customer engagement meetings</td></tr>
+      <tr class="total"><td><strong>Phase 0 total</strong></td><td class="num"><strong>Rs 0.20 Cr</strong></td><td>—</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3 class="serif" style="margin-top:2rem;margin-bottom:1rem">Phase 0 exit gate</h3>
+
+  <p>Phase 0 closes when three conditions are simultaneously met: founding team in place with signed offer letters and start dates; two or more design-partner LOIs executed; architecture document signed off by external reviewer. Failure on any condition extends Phase 0 by up to four weeks before triggering escalation review. Phase 1 budget release is conditional on these gates closing.</p>
+</section>
+</div>
+
+<div class="shell">
+<section id="sec-06">
+  <div class="section-num">Section 06 — Phase 1</div>
+  <h2 class="section-title serif">Core MVP.</h2>
+  <p class="section-lede">Phase 1 builds the working demo. Two AEGIS models in production, two AlgoForge products at functional alpha, five integrations, ten remediation playbooks. The deliverable is a system that solves real customer problems badly — the right benchmark for a six-month MVP build.</p>
+
+  <div class="phase-budget">
+    <div class="phase-budget-cell">
+      <div class="phase-budget-label">Window</div>
+      <div class="phase-budget-value">M2 – M8</div>
+    </div>
+    <div class="phase-budget-cell">
+      <div class="phase-budget-label">Headcount peak</div>
+      <div class="phase-budget-value">5 FTE</div>
+    </div>
+    <div class="phase-budget-cell">
+      <div class="phase-budget-label">Phase outlay</div>
+      <div class="phase-budget-value">Rs 0.50 Cr</div>
+    </div>
+  </div>
+
+  <h3 class="serif" style="margin-top:2rem;margin-bottom:1rem">Phase 1 deliverables</h3>
+
+  <ul class="refined-list">
+    <li><strong>AEGIS M01 (Anomaly) at functional alpha.</strong> Single-modality variational autoencoder on network flow features. Per-customer baseline training pipeline operational. SHAP attribution surfaced per alert. Performance targets: TPR 0.70+ at FPR 0.05 on synthetic test suite.</li>
+    <li><strong>AEGIS M02 (Classification) at functional alpha.</strong> Phishing URL classifier trained on PhishTank + OpenPhish. PE malware classifier trained on EMBER 2018 subset. Both serving via gRPC inference endpoint.</li>
+    <li><strong>ForgeSOC v0.5.</strong> Basic SIEM with OpenSearch backend, Sigma-rule detection, manual incident workflow. SIEM ingest at 5,000 EPS sustained. Detection rule library seeded with 50 high-confidence Sigma rules.</li>
+    <li><strong>ForgeShield v0.3.</strong> Transaction-scoring API operational with M01-derived anomaly score. Latency target relaxed at this phase (sub-200 ms acceptable).</li>
+    <li><strong>Five data source integrations.</strong> Identity provider (Azure AD or Okta), one EDR vendor connector, one NGFW connector, one cloud audit log connector, generic syslog ingestion.</li>
+    <li><strong>Ten SOAR playbooks.</strong> Manual-trigger orchestration for: isolate host, revoke session, block IP, disable account, create ticket, send notification, plus four customer-specific variants.</li>
+    <li><strong>Single-region cloud deployment.</strong> Kubernetes cluster on the existing infrastructure; single-customer operation; isolation architecture stubbed but not multi-tenant production-ready.</li>
+    <li><strong>First demo.</strong> End-to-end scripted demonstration shown to design partners; verbal feedback solicited and incorporated.</li>
+  </ul>
+
+  <h3 class="serif" style="margin-top:2rem;margin-bottom:1rem">Phase 1 cost detail</h3>
+
+  <div class="tbl-wrap">
+  <table class="dpr">
+    <thead>
+      <tr><th>Line item</th><th class="num">Amount</th><th>Notes</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Compensation (5 FTE × 6 months)</td><td class="num">Rs 36 L</td><td>2 ML engineers · 2 product engineers · 1 platform/SRE · partial founder discount</td></tr>
+      <tr><td>Infrastructure utilisation</td><td class="num">Rs 6 L</td><td>Dev/staging clusters · CI/CD · monitoring tooling · open-source stack</td></tr>
+      <tr><td>External services &amp; tooling</td><td class="num">Rs 3 L</td><td>SaaS dev tools · GitLab Premium · Datadog or equivalent · Slack/Linear</td></tr>
+      <tr><td>Pre-pilot legal review</td><td class="num">Rs 2 L</td><td>Design-partner pilot agreement template review</td></tr>
+      <tr><td>Sales &amp; engagement</td><td class="num">Rs 3 L</td><td>Customer demos · industry conference attendance · BFSI relationship investment</td></tr>
+      <tr class="total"><td><strong>Phase 1 total</strong></td><td class="num"><strong>Rs 0.50 Cr</strong></td><td>—</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3 class="serif" style="margin-top:2rem;margin-bottom:1rem">Phase 1 exit gate</h3>
+
+  <p>Phase 1 closes when the demo runs successfully end-to-end against synthetic adversary data, when at least one design partner has agreed to begin paid pilot in Phase 2, and when the Series-Seed round has either closed or has a signed term sheet in execution. Inability to convert any design partner to paid pilot is a structural signal — Phase 2 should not begin without commercial validation.</p>
+</section>
+</div>
+
+<div class="shell">
+<section id="sec-07">
+  <div class="section-num">Section 07 — Phase 2</div>
+  <h2 class="section-title serif">Pilot-ready product.</h2>
+  <p class="section-lede">Phase 2 is the conversion phase. The product becomes good enough that real customers will pay real money to use it. Three pilots running in production, four additional AEGIS models reaching alpha, MITRE ATT&amp;CK mapping operational, SOC 2 Type I attestation initiated.</p>
+
+  <div class="phase-budget">
+    <div class="phase-budget-cell">
+      <div class="phase-budget-label">Window</div>
+      <div class="phase-budget-value">M8 – M14</div>
+    </div>
+    <div class="phase-budget-cell">
+      <div class="phase-budget-label">Headcount peak</div>
+      <div class="phase-budget-value">7 FTE</div>
+    </div>
+    <div class="phase-budget-cell">
+      <div class="phase-budget-label">Phase outlay</div>
+      <div class="phase-budget-value">Rs 0.85 Cr</div>
+    </div>
+  </div>
+
+  <h3 class="serif" style="margin-top:2rem;margin-bottom:1rem">Phase 2 deliverables</h3>
+
+  <ul class="refined-list">
+    <li><strong>Four additional AEGIS models reaching alpha.</strong> M03 (NLP/CTI) with LLaMA 3.1 8B and basic LoRA adapters; M04 (correlation) with rule DSL plus simple GraphSAGE GNN; M05 (UEBA) with per-user GMM baseline; M06 (predictive) with XGBoost classifier on EPSS-aligned features.</li>
+    <li><strong>Threat intelligence integration.</strong> OSINT feed aggregation operational (OTX, MISP community, URLhaus, Abuse.ch, CERT-In). Indicator-of-compromise extraction pipeline functional.</li>
+    <li><strong>MITRE ATT&amp;CK mapping.</strong> Detection-to-technique mapping established for the existing rule library. Coverage dashboard surfaced in ForgeSOC. Initial coverage target: 60% of common Enterprise techniques.</li>
+    <li><strong>Topology view in ForgeSOC.</strong> Asset and entity graph visualisation; basic SLA tracking module; investigation timeline reconstruction.</li>
+    <li><strong>Multi-tenant isolation.</strong> Per-customer Kubernetes namespace with NetworkPolicy enforcement. Per-customer storage volumes with separate encryption keys (full HSM integration deferred to Phase 3). Identity isolation operational.</li>
+    <li><strong>Fourteen-plus integrations.</strong> Beyond the Phase 1 baseline: SAML 2.0 / OIDC for federated identity; CrowdStrike, Microsoft Defender, SentinelOne EDR connectors; Palo Alto, Cisco Firepower NGFW connectors; AWS, Azure, GCP cloud connectors; ServiceNow and Jira ticketing.</li>
+    <li><strong>SOC 2 Type I attestation issued.</strong> Initial Trust Services Criteria attestation as readiness signal for tier-2 BFSI procurement; Type II audit cycle commenced.</li>
+    <li><strong>Three paid pilot customers in production.</strong> Target: one tier-2 bank or NBFC, one fintech / payments aggregator, one mid-market enterprise. Quarterly revenue Rs 30–45 lakh by end of phase. ARR run-rate Rs 50 lakh – Rs 1 crore exiting M14.</li>
+  </ul>
+
+  <h3 class="serif" style="margin-top:2rem;margin-bottom:1rem">Phase 2 cost detail</h3>
+
+  <div class="tbl-wrap">
+  <table class="dpr">
+    <thead>
+      <tr><th>Line item</th><th class="num">Amount</th><th>Notes</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Compensation (7 FTE × 6 months)</td><td class="num">Rs 54 L</td><td>Adds: senior ML engineer · solution engineer · data engineer to Phase 1 team</td></tr>
+      <tr><td>Infrastructure expansion</td><td class="num">Rs 10 L</td><td>Initial pilot-customer pod provisioning · staging environment hardening</td></tr>
+      <tr><td>SOC 2 Type I audit + ISO prep</td><td class="num">Rs 12 L</td><td>SOC 2 Type I issuance · Type II readiness assessment</td></tr>
+      <tr><td>Threat-intel feed licences</td><td class="num">Rs 4 L</td><td>Initial commercial CTI subscriptions · MISP membership</td></tr>
+      <tr><td>Sales &amp; pilot conversion</td><td class="num">Rs 3 L</td><td>BFSI conferences · pilot customer engagement · demo platform</td></tr>
+      <tr><td>Legal &amp; contracts</td><td class="num">Rs 2 L</td><td>Pilot-to-paid contract migration · DPA template review</td></tr>
+      <tr class="total"><td><strong>Phase 2 total</strong></td><td class="num"><strong>Rs 0.85 Cr</strong></td><td>—</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3 class="serif" style="margin-top:2rem;margin-bottom:1rem">Phase 2 exit gate</h3>
+
+  <p>Phase 2 closes when three paid pilot deployments are operating in customer-managed production (not Quisitive-staging) with at least 30 days of MTTD/MTTR telemetry, when SOC 2 Type I report is issued and Type II audit fieldwork has commenced, and when the four additional AEGIS models have passed internal alpha review by the ML lead. The most consequential exit-gate failure mode is pilot conversion shortfall — without three paid contracts, Phase 3 should not commit the Rs 3.85 crore Enterprise-Grade v1 budget.</p>
+</section>
+</div>
+
+<div class="shell">
+<section id="sec-08">
+  <div class="section-num">Section 08 — Phase 3</div>
+  <h2 class="section-title serif">Enterprise-grade v1.</h2>
+  <p class="section-lede">Phase 3 is the productionisation programme — the largest single phase in the build at Rs 3.85 crore, an eight-month effort during which the team scales from seven to twenty-two FTE, all six AEGIS models pass the six-gate governance framework into champion status, and all six AlgoForge products reach general availability with regulator-defensibility hardening sufficient for tier-2 BFSI procurement.</p>
+
+  <div class="phase-budget">
+    <div class="phase-budget-cell">
+      <div class="phase-budget-label">Window</div>
+      <div class="phase-budget-value">M14 – M22</div>
+    </div>
+    <div class="phase-budget-cell">
+      <div class="phase-budget-label">Headcount peak</div>
+      <div class="phase-budget-value">22 FTE</div>
+    </div>
+    <div class="phase-budget-cell">
+      <div class="phase-budget-label">Phase outlay</div>
+      <div class="phase-budget-value">Rs 3.85 Cr</div>
+    </div>
+  </div>
+
+  <h3 class="serif" style="margin-top:2rem;margin-bottom:1rem">Phase 3 deliverables — engineering</h3>
+
+  <ul class="refined-list">
+    <li><strong>Six AEGIS models in champion status.</strong> M01 (Anomaly), M02 (Classification), M03 (NLP/CTI), M04 (Correlation), M05 (UEBA), M06 (Predictive) all complete six-gate governance passage. Documented benchmark suite passing on held-out test set. Drift monitoring operational. Rollback procedures validated. Champion-challenger automation infrastructure live.</li>
+    <li><strong>Six AlgoForge products at GA quality.</strong> ForgeShield (fraud and AML), ForgeSentinel (NDR), ForgeVault (CSPM), ForgeSOC (XDR), ForgeIntel (TI), ForgeIdentity (ZTA) — all six at general availability with documented test coverage above 75% on critical paths, integration coverage across the 14+ supported data sources, and analyst-validated user experience.</li>
+    <li><strong>SOAR playbook library.</strong> 47 production playbooks spanning identity isolation, network containment, EDR response, cloud-resource quarantine, ticketing handoff, customer-specific custom workflows, regulatory notification automation. Each playbook with documented runbook, rollback procedure, and test coverage.</li>
+    <li><strong>MITRE ATT&amp;CK coverage.</strong> 80%+ Enterprise technique coverage in detection rule library at GA. Coverage dashboard surfaced in ForgeSOC. Detection-engineering pipeline operational for ongoing rule development.</li>
+    <li><strong>Threat intelligence aggregation.</strong> 14+ commercial and OSINT feeds aggregated. India-specific dark-web monitoring operational. Indicator-of-compromise extraction, deduplication, and confidence-scoring pipeline at production quality.</li>
+    <li><strong>Multi-tenant production isolation.</strong> Six-layer isolation architecture fully implemented. Isolation regression suite of 200+ test cases gating every release. External penetration test by CERT-In-empanelled firm with critical findings remediated.</li>
+  </ul>
+
+  <h3 class="serif" style="margin-top:2rem;margin-bottom:1rem">Phase 3 deliverables — performance</h3>
+
+  <ul class="refined-list">
+    <li><strong>ForgeShield latency.</strong> p99 transaction-scoring latency below 50 milliseconds under 5,000 transactions-per-second sustained load. p50 below 18 milliseconds. Validated against three customer transaction profiles.</li>
+    <li><strong>AEGIS inference throughput.</strong> 4,000+ events-per-second sustained per inference node under multi-model concurrent load. Inference cluster scales linearly to 8 nodes without degradation.</li>
+    <li><strong>SIEM ingest rate.</strong> 50,000 events-per-second sustained ingest without backpressure. Burst tolerance to 80,000 EPS for 5-minute windows. End-to-end ingest-to-detection latency below 90 seconds at p99.</li>
+    <li><strong>Availability SLA.</strong> 99.9% measured availability over the v1 GA quarter. Documented incident-response and customer-communication procedures.</li>
+  </ul>
+
+  <h3 class="serif" style="margin-top:2rem;margin-bottom:1rem">Phase 3 deliverables — compliance</h3>
+
+  <ul class="refined-list">
+    <li><strong>SOC 2 Type II report.</strong> Issued and dated within v1 window. All five Trust Services Criteria covered. No qualified findings.</li>
+    <li><strong>ISO 27001 first surveillance audit.</strong> Conducted on schedule on 27 January 2027. Zero major non-conformities. Minor findings remediated within 60 days.</li>
+    <li><strong>RBI-readiness self-assessment.</strong> Complete self-assessment against RBI Master Direction on IT Governance, Risk, Controls and Assurance Practices reviewed by external CERT-In-empanelled firm. Self-assessment available to BFSI customers under NDA.</li>
+    <li><strong>CERT-In empanelment.</strong> Application submitted with required documentation. First-round audit scheduled within Phase 3 close window.</li>
+    <li><strong>DPDP Act compliance posture.</strong> Data Protection Officer designated. Personal-data processing register complete. Cross-border transfer assessment conducted. Data-principal rights workflow operational.</li>
+  </ul>
+
+  <h3 class="serif" style="margin-top:2rem;margin-bottom:1rem">Phase 3 deliverables — commercial</h3>
+
+  <ul class="refined-list">
+    <li><strong>Three paid BFSI customers in production.</strong> 90+ days of MTTD/MTTR telemetry. At least one tier-2 bank reference. At least one fintech / payments aggregator reference. Reference-customer attestations available under NDA in Series A data room.</li>
+    <li><strong>Series A data room operational.</strong> Reference-customer attestations, financial diligence package, technical-architecture documentation, compliance certifications, customer-base ARR and usage telemetry — all available to qualified institutional investors under executed NDA.</li>
+    <li><strong>Capital readiness.</strong> Series A round in active conversation with at least three institutional investors. Term-sheet target by M24, two months after v1 GA close.</li>
+  </ul>
+
+  <h3 class="serif" style="margin-top:2rem;margin-bottom:1rem">Phase 3 deliverables — infrastructure</h3>
+
+  <ul class="refined-list">
+    <li><strong>Inference GPU expansion.</strong> Two NVIDIA L40S 48 GB inference GPUs procured, racked, benchmarked, and integrated into Triton serving fleet. Multi-customer concurrent serving validated.</li>
+    <li><strong>Kafka quorum hardening.</strong> 3-broker NVMe-backed Kafka cluster commissioned. 50,000 EPS sustained ingest validated. Replication factor 3 with rack-awareness.</li>
+    <li><strong>Immutable backup target.</strong> 50 TB offsite WORM backup target commissioned. Daily encrypted backups with documented restoration procedure. Quarterly disaster-recovery drill conducted within Phase 3 close window.</li>
+    <li><strong>Observability dedicated cluster.</strong> Prometheus + Grafana + Loki + Tempo on dedicated hardware. Platform telemetry separated from customer telemetry. Alert routing to on-call rotation.</li>
+  </ul>
+
+  <h3 class="serif" style="margin-top:2rem;margin-bottom:1rem">Phase 3 cost summary</h3>
+
+  <div class="tbl-wrap">
+  <table class="dpr">
+    <thead>
+      <tr><th>Line item</th><th class="num">Amount</th><th>Notes</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Compensation (22 FTE peak, ramp-loaded over 8 months)</td><td class="num">Rs 1.82 Cr</td><td>Hiring waterfall ramps from 7 FTE entry to 22 FTE exit across 8 months · weighted average 15 FTE</td></tr>
+      <tr><td>Infrastructure augmentation (capex)</td><td class="num">Rs 1.02 Cr</td><td>L40S GPUs · Kafka expansion · backup target · observability · pen-test</td></tr>
+      <tr><td>SOC 2 Type II audit fees</td><td class="num">Rs 27 L</td><td>Big-4 or Tier-2 audit firm engagement</td></tr>
+      <tr><td>ISO surveillance + DPDP advisory</td><td class="num">Rs 16 L</td><td>UAF/IAF surveillance · external regulatory counsel</td></tr>
+      <tr><td>Threat-intel feed licences</td><td class="num">Rs 19 L</td><td>Expanded commercial CTI · India-specific dark-web monitoring</td></tr>
+      <tr><td>Cloud-services peripheral costs</td><td class="num">Rs 13 L</td><td>Egress · email/SMS · SaaS tooling</td></tr>
+      <tr><td>Sales &amp; marketing</td><td class="num">Rs 12 L</td><td>BFSI conferences · paid media · relationship investment</td></tr>
+      <tr><td>Legal · contracts · regulatory</td><td class="num">Rs 8 L</td><td>MSA / DPA / SLA template review</td></tr>
+      <tr><td>Contingency reserve</td><td class="num">Rs 6 L</td><td>Programme-management buffer</td></tr>
+      <tr class="total"><td><strong>Phase 3 total</strong></td><td class="num"><strong>Rs 3.85 Cr</strong></td><td>Largest single phase in build · 28.5% of programme outlay</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3 class="serif" style="margin-top:2rem;margin-bottom:1rem">Phase 3 exit gate</h3>
+
+  <p>Phase 3 closes when AEGIS Enterprise-Grade v1 is declared general availability with all twelve components (six models, six products) in champion / GA status, when SOC 2 Type II report is issued, when three paid customers are operating in production, and when Series A institutional conversations are calendared. This is the most consequential gate in the programme — failure here delays Phase 4 commercial economics and stretches the operations-runway demand on capital.</p>
+</section>
+</div>
+
+<div class="shell">
+<section id="sec-09">
+  <div class="section-num">Section 09 — Phase 4</div>
+  <h2 class="section-title serif">Post-GA operations to break-even.</h2>
+  <p class="section-lede">Phase 4 is the longest, most expensive, and most often underestimated phase in the programme. Fourteen months between general availability and the inflection point at which monthly customer revenue exceeds monthly burn. The phase consumes Rs 6.80 crore — more than every prior phase combined — and produces no new product capability. Its deliverable is a self-sustaining business.</p>
+
+  <div class="phase-budget">
+    <div class="phase-budget-cell">
+      <div class="phase-budget-label">Window</div>
+      <div class="phase-budget-value">M22 – M36</div>
+    </div>
+    <div class="phase-budget-cell">
+      <div class="phase-budget-label">Headcount peak</div>
+      <div class="phase-budget-value">26 FTE</div>
+    </div>
+    <div class="phase-budget-cell">
+      <div class="phase-budget-label">Phase outlay</div>
+      <div class="phase-budget-value">Rs 6.80 Cr</div>
+    </div>
+  </div>
+
+  <h3 class="serif" style="margin-top:2rem;margin-bottom:1rem">Phase 4 deliverables</h3>
+
+  <ul class="refined-list">
+    <li><strong>Customer base scaling.</strong> From three paid customers at M22 to fourteen paid customers at M36 (base case) at blended ACV of Rs 28 lakh — Rs 3.92 Cr exit ARR. Conservative scenario: 8 customers / Rs 1.76 Cr ARR. Stretch scenario: 22 customers / Rs 7.48 Cr ARR.</li>
+    <li><strong>Sales and customer success expansion.</strong> Sales team scales from 3 to 5 (+2 BFSI account directors). Customer success team scales from 1 to 3 to support 14+ active customer relationships at the depth required for renewal and expansion.</li>
+    <li><strong>v1.5 release.</strong> Deferred items from v1 — Mode 1 tier-1-bank deployment hardening, multi-region active-active failover, SaaS self-service onboarding portal — enter active engineering in M28 and ship at M34. v1.5 is engineering-only with no new ML model releases.</li>
+    <li><strong>Series A round closed.</strong> Targeted close at M24 against three reference customers and Rs 1.5 Cr+ ARR run-rate. Round size Rs 7–10 crore at Rs 80–120 Cr post-money valuation in base case.</li>
+    <li><strong>Annual certification refresh cycles.</strong> SOC 2 Type II refresh at M34 (twelve-month cycle from initial Type II report). ISO 27001, ISO 9001, ISO 20000-1 surveillance audits at M23 (27 January 2027) and M35 (27 January 2028). CERT-In empanelment achieved during this window.</li>
+    <li><strong>Cash-flow break-even reached.</strong> Monthly customer revenue exceeds monthly burn at approximately M32 in base case (M28 stretch, M36+ conservative). The company becomes financeable on its own economics rather than on investor patience — the structural objective of the programme.</li>
+  </ul>
+
+  <h3 class="serif" style="margin-top:2rem;margin-bottom:1rem">Phase 4 cost detail</h3>
+
+  <div class="tbl-wrap">
+  <table class="dpr">
+    <thead>
+      <tr><th>Line item</th><th class="num">Amount</th><th>Notes</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Compensation (peak 26 FTE × 14 months, blended ramp)</td><td class="num">Rs 4.80 Cr</td><td>22 FTE carried in from Phase 3 + 4 net new hires (sales + CS + senior product engineer + ML researcher)</td></tr>
+      <tr><td>Infrastructure expansion</td><td class="num">Rs 0.85 Cr</td><td>Capacity scale beyond 5 concurrent customers · second-region DR commissioning · v1.5 development</td></tr>
+      <tr><td>Annual SOC 2 Type II refresh</td><td class="num">Rs 22 L</td><td>Twelve-month cycle from initial Type II issuance</td></tr>
+      <tr><td>ISO surveillance audits (×2)</td><td class="num">Rs 8 L</td><td>27 Jan 2027 and 27 Jan 2028 surveillance fees</td></tr>
+      <tr><td>CERT-In empanelment</td><td class="num">Rs 6 L</td><td>Application + audit + first-year fees</td></tr>
+      <tr><td>Threat-intel licences (continuing)</td><td class="num">Rs 4 L</td><td>Renewal cycle for commercial CTI subscriptions</td></tr>
+      <tr><td>Sales &amp; go-to-market</td><td class="num">Rs 55 L</td><td>BFSI conferences · paid pipeline · 2 additional AE hires onboarding investment · India-context CTI report production</td></tr>
+      <tr><td>Customer success scale-out</td><td class="num">Rs 12 L</td><td>CS tooling · onboarding playbooks · customer portal development</td></tr>
+      <tr><td>Legal · regulatory · counsel</td><td class="num">Rs 16 L</td><td>Continuing MSA negotiation · DPDP advisory · contract management</td></tr>
+      <tr><td>Contingency reserve</td><td class="num">Rs 12 L</td><td>Operational contingency for Phase 4-specific events</td></tr>
+      <tr class="total"><td><strong>Phase 4 total</strong></td><td class="num"><strong>Rs 6.80 Cr</strong></td><td>Largest single bucket in the programme</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="callout">
+    <div class="callout-label">Why Phase 4 is bigger than every other phase combined</div>
+    <p>The team does not shrink after general availability — it grows. The certifications do not pay for themselves once issued — they require annual refresh under contractually-binding cycles. The sales investment that was deferred during the build years now has to scale, because the product is finally ready to be sold to customers other than the original pilots. The customer success function, which barely existed during the build, becomes the most important commercial discipline in the company. None of these costs were avoidable; they were merely deferred. Phase 4 is when they arrive.</p>
+  </div>
+
+  <h3 class="serif" style="margin-top:2rem;margin-bottom:1rem">Phase 4 exit gate</h3>
+
+  <p>Phase 4 closes — and the programme closes — when monthly customer revenue exceeds monthly burn for two consecutive months. In base-case scenario this occurs at approximately M32. From that point the company is operationally self-sustaining and any further capital deployment is for accelerated growth rather than survival. The programme's success criterion is reaching this inflection without exhausting the Rs 13.50 crore outlay.</p>
+</section>
+</div>
+
+<div class="shell">
+<section id="sec-10">
+  <div class="section-num">Section 10 — Infrastructure &amp; Capacity</div>
+  <h2 class="section-title serif">Existing installation, build augmentation, post-GA expansion.</h2>
+  <p class="section-lede">Infrastructure outlay across the 36-month programme aggregates Rs 2.15 crore — Rs 1.30 crore during the build phases and Rs 0.85 crore during operations. The starting position is materially advantageous: the Rs 3.85 crore Greater Noida high-performance compute installation is already deployed, commissioned, and producing telemetry.</p>
+
+  <h3 class="serif" style="margin-top:2rem;margin-bottom:1rem">Existing infrastructure (already deployed)</h3>
+
+  <div class="tbl-wrap">
+  <table class="dpr">
+    <caption>Table 10·A — Greater Noida HPC installation · pre-programme baseline</caption>
+    <thead>
+      <tr><th>Component</th><th>Specification</th><th class="num">Carrying value</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Compute (2× dual-socket Xeon)</td><td>Intel Xeon Gold Sapphire Rapids · 128 cores total · AVX-512 / AMX / VNNI</td><td class="num">Rs 1.05 Cr</td></tr>
+      <tr><td>Memory subsystem</td><td>1.4 TB DDR5 ECC RDIMM @ 4800 MT/s · in-memory LLM inference</td><td class="num">Rs 38 L</td></tr>
+      <tr><td>Storage Area Network</td><td>23 TB SAN-class SSD · 500,000 IOPS · SAS 12 Gbps · RAID-6</td><td class="num">Rs 62 L</td></tr>
+      <tr><td>FortiGate 120G HA pair</td><td>SP5 ASIC · 40 Gbps firewall · 1.5 M concurrent sessions</td><td class="num">Rs 48 L</td></tr>
+      <tr><td>Aruba CX 8325 core switching (2 units)</td><td>VXLAN-EVPN fabric · micro-segmentation · 100 GbE uplinks</td><td class="num">Rs 42 L</td></tr>
+      <tr><td>FortiAuthenticator + HSM</td><td>Hardware-rooted KMS · per-customer key isolation</td><td class="num">Rs 28 L</td></tr>
+      <tr><td>NVIDIA A100 80 GB GPU (4 units)</td><td>312 TFLOPS FP16 · NVLink interconnect · ML training and inference</td><td class="num">Rs 95 L</td></tr>
+      <tr><td>Rack, PDU, cooling, UPS</td><td>42U · A+B feed · 30 kVA UPS with 30-min runtime</td><td class="num">Rs 17 L</td></tr>
+      <tr class="total"><td><strong>Total existing infrastructure</strong></td><td>—</td><td class="num"><strong>Rs 3.85 Cr</strong></td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3 class="serif" style="margin-top:2rem;margin-bottom:1rem">Programme-window infrastructure outlay</h3>
+
+  <div class="tbl-wrap">
+  <table class="dpr">
+    <caption>Table 10·B — Infrastructure outlay across the 36-month programme</caption>
+    <thead>
+      <tr><th>Phase</th><th>Item</th><th>Justification</th><th class="num">Amount</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>P0</td><td>Cloud sandbox + dev tooling</td><td>Pre-team development environment</td><td class="num">Rs 2 L</td></tr>
+      <tr><td>P1</td><td>Dev/staging cluster + CI/CD</td><td>Open-source stack provisioning · monitoring</td><td class="num">Rs 6 L</td></tr>
+      <tr><td>P2</td><td>Pilot pod provisioning + staging hardening</td><td>Initial multi-tenant infrastructure for paid pilots</td><td class="num">Rs 10 L</td></tr>
+      <tr><td>P3</td><td>2× NVIDIA L40S GPU (48 GB inference workhorse)</td><td>Inference scale-out for multi-customer concurrent serving</td><td class="num">Rs 42 L</td></tr>
+      <tr><td>P3</td><td>Kafka quorum expansion · 3-broker NVMe</td><td>50,000 EPS sustained ingest with fault tolerance</td><td class="num">Rs 22 L</td></tr>
+      <tr><td>P3</td><td>Immutable backup target · 50 TB offsite WORM</td><td>SOC 2 Type II disaster-recovery posture</td><td class="num">Rs 18 L</td></tr>
+      <tr><td>P3</td><td>Pen-test &amp; red-team external engagement</td><td>CERT-In empanelled firm · pre-GA assessment</td><td class="num">Rs 12 L</td></tr>
+      <tr><td>P3</td><td>Observability stack hardware</td><td>Prometheus + Grafana + Loki + Tempo dedicated cluster</td><td class="num">Rs 8 L</td></tr>
+      <tr class="subtotal"><td colspan="3"><strong>Build subtotal (Phases 0–3)</strong></td><td class="num"><strong>Rs 1.20 Cr</strong></td></tr>
+      <tr><td>P4</td><td>Capacity scale-out beyond 5 concurrent customers</td><td>Additional A100 fleet · second SAN volume · network capacity</td><td class="num">Rs 45 L</td></tr>
+      <tr><td>P4</td><td>Second-region disaster-recovery commissioning</td><td>Active-passive DR site for v1.5 customer-base</td><td class="num">Rs 28 L</td></tr>
+      <tr><td>P4</td><td>v1.5 development environment expansion</td><td>Tier-1-bank deployment hardening sandbox · multi-region active-active testbed</td><td class="num">Rs 12 L</td></tr>
+      <tr class="total"><td colspan="3"><strong>Total infrastructure outlay (M0–M36)</strong></td><td class="num"><strong>Rs 2.05 Cr</strong></td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p class="aside">Total infrastructure outlay over the programme (Rs 2.05 Cr) plus reserve allocation against infrastructure surprises (Rs 0.10 Cr from the working-capital reserve) sums to the Rs 2.15 Cr line item shown in the second-level cost decomposition. This is the planned figure; actual expenditure is tracked monthly and may shift between line items within the same phase.</p>
+</section>
+</div>
+
+<div class="shell">
+<section id="sec-11">
+  <div class="section-num">Section 11 — Manpower &amp; Organisation</div>
+  <h2 class="section-title serif">From three to twenty-six. The hiring waterfall.</h2>
+  <p class="section-lede">The team grows from three founding members at programme start to twenty-six at peak in Phase 4. The cumulative compensation outlay across the 36-month window is Rs 8.00 crore — by far the largest single line item in the programme. Hiring is sequenced against phase exit gates rather than calendar months.</p>
+
+  <h3 class="serif" style="margin-top:2rem;margin-bottom:1rem">Headcount evolution by phase</h3>
+
+  <div class="tbl-wrap">
+  <table class="dpr">
+    <caption>Table 11·A — Cumulative headcount and monthly compensation run-rate by phase</caption>
+    <thead>
+      <tr><th>Phase</th><th>Window</th><th class="num">Joiners</th><th class="num">Cum FTE</th><th>Notable additions</th><th class="num">Monthly run-rate</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>P0 entry</td><td>M0</td><td class="num">+3</td><td class="num">3</td><td>Vertical Head · ML lead · senior product engineer</td><td class="num">Rs 6.0 L</td></tr>
+      <tr><td>P1 ramp</td><td>M2–M5</td><td class="num">+2</td><td class="num">5</td><td>+ 1 ML engineer · 1 platform/SRE</td><td class="num">Rs 6.0 L (P1 avg)</td></tr>
+      <tr><td>P2 ramp</td><td>M8–M12</td><td class="num">+2</td><td class="num">7</td><td>+ 1 senior ML engineer · 1 solution engineer</td><td class="num">Rs 9.0 L (P2 avg)</td></tr>
+      <tr><td>P3 ramp</td><td>M14–M22</td><td class="num">+15</td><td class="num">22</td><td>+ 5 product engineers · 4 ML engineers · 3 SE/sales · 1 CSM · 2 SRE</td><td class="num">Rs 53.3 L (P3 peak)</td></tr>
+      <tr><td>P4 expansion</td><td>M24–M30</td><td class="num">+4</td><td class="num">26</td><td>+ 2 BFSI account directors · 2 customer success managers</td><td class="num">Rs 60.5 L (P4 peak)</td></tr>
+      <tr class="total"><td><strong>Programme peak</strong></td><td>M30+</td><td class="num"><strong>—</strong></td><td class="num"><strong>26</strong></td><td>—</td><td class="num"><strong>Rs 60.5 L</strong></td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3 class="serif" style="margin-top:2rem;margin-bottom:1rem">Compensation outlay by phase</h3>
+
+  <div class="tbl-wrap">
+  <table class="dpr">
+    <thead>
+      <tr><th>Phase</th><th>Window</th><th class="num">Months</th><th class="num">Avg FTE</th><th class="num">Avg monthly cost</th><th class="num">Phase compensation</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>P0</td><td>M0–M2</td><td class="num">2</td><td class="num">3</td><td class="num">Rs 6.0 L</td><td class="num">Rs 12 L</td></tr>
+      <tr><td>P1</td><td>M2–M8</td><td class="num">6</td><td class="num">4–5</td><td class="num">Rs 6.0 L</td><td class="num">Rs 36 L</td></tr>
+      <tr><td>P2</td><td>M8–M14</td><td class="num">6</td><td class="num">6–7</td><td class="num">Rs 9.0 L</td><td class="num">Rs 54 L</td></tr>
+      <tr><td>P3</td><td>M14–M22</td><td class="num">8</td><td class="num">15 (ramp avg)</td><td class="num">Rs 22.7 L</td><td class="num">Rs 1.82 Cr</td></tr>
+      <tr><td>P4</td><td>M22–M36</td><td class="num">14</td><td class="num">23 (ramp avg)</td><td class="num">Rs 34.3 L</td><td class="num">Rs 4.80 Cr</td></tr>
+      <tr><td>Reserve allocation</td><td>—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">Rs 36 L</td></tr>
+      <tr class="total"><td><strong>Programme total</strong></td><td>36 mo</td><td class="num"><strong>36</strong></td><td class="num"><strong>—</strong></td><td class="num"><strong>—</strong></td><td class="num"><strong>Rs 8.00 Cr</strong></td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p class="aside">The phase compensation figures include base salary, employer provident-fund and ESI contributions, gratuity provisioning, and ESOP cash-equivalent valuation at vest. They do not include the full-fair-value ESOP grants which are equity-funded rather than cash-funded. The reserve allocation against compensation absorbs scenarios where above-band counter-offers are required to retain key engineering talent.</p>
+</section>
+</div>
+
+<div class="shell">
+<section id="sec-12">
+  <div class="section-num">Section 12 — Compliance &amp; Certifications</div>
+  <h2 class="section-title serif">Existing certifications, programme-window attestations, ongoing refresh cycles.</h2>
+  <p class="section-lede">Compliance is a structural moat against hyperscaler-dependent competitors and a substantive cost line over the programme. Total compliance and audit outlay across 36 months is Rs 1.50 crore — Rs 0.71 crore during the build phases and Rs 0.40 crore during operations, plus Rs 0.39 crore in transaction-distributed legal and counsel fees.</p>
+
+  <h3 class="serif" style="margin-top:2rem;margin-bottom:1rem">Existing certifications carried into the programme</h3>
+
+  <div class="tbl-wrap">
+  <table class="dpr">
+    <caption>Table 12·A — Quisitive certifications as of programme start</caption>
+    <thead>
+      <tr><th>Standard</th><th>Certificate no.</th><th>Issued</th><th>Valid through</th><th>Accreditation</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>ISO/IEC 27001:2022 — ISMS</td><td>26UQAV11</td><td>27 Feb 2026</td><td>26 Feb 2029</td><td>UAF &amp; IAF</td></tr>
+      <tr><td>ISO 9001:2015 — QMS</td><td>26UQAV12</td><td>27 Feb 2026</td><td>26 Feb 2029</td><td>UAF &amp; IAF (IAF Code 33)</td></tr>
+      <tr><td>ISO/IEC 20000-1:2018 — ITSMS</td><td>26UITAH14</td><td>27 Feb 2026</td><td>26 Feb 2029</td><td>UAF</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3 class="serif" style="margin-top:2rem;margin-bottom:1rem">Programme-window certification timeline</h3>
+
+  <div class="tbl-wrap">
+  <table class="dpr">
+    <caption>Table 12·B — Audit and certification calendar across 36 months</caption>
+    <thead>
+      <tr><th>Phase</th><th>Audit / certification</th><th>Target month</th><th class="num">Cost</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>P2</td><td>SOC 2 Type I issuance</td><td>M12–M13</td><td class="num">Rs 9 L</td></tr>
+      <tr><td>P2</td><td>SOC 2 Type II audit fieldwork commencement</td><td>M13</td><td class="num">Rs 3 L (deposit)</td></tr>
+      <tr><td>P3</td><td>SOC 2 Type II audit completion + report issuance</td><td>M21</td><td class="num">Rs 24 L</td></tr>
+      <tr><td>P3</td><td>ISO 27001 first surveillance audit</td><td>M23 (27 Jan 2027)</td><td class="num">Rs 4 L</td></tr>
+      <tr><td>P3</td><td>External RBI-readiness review</td><td>M20</td><td class="num">Rs 6 L</td></tr>
+      <tr><td>P3</td><td>Pre-GA penetration testing (CERT-In empanelled firm)</td><td>M19–M21</td><td class="num">Rs 12 L</td></tr>
+      <tr><td>P3</td><td>DPDP Act advisory engagement</td><td>M14–M22 ongoing</td><td class="num">Rs 6 L</td></tr>
+      <tr><td>P4</td><td>SOC 2 Type II annual refresh</td><td>M34</td><td class="num">Rs 22 L</td></tr>
+      <tr><td>P4</td><td>ISO 27001 second surveillance audit</td><td>M35 (27 Jan 2028)</td><td class="num">Rs 4 L</td></tr>
+      <tr><td>P4</td><td>ISO 9001 + 20000-1 surveillance audits</td><td>M23, M35</td><td class="num">Rs 4 L</td></tr>
+      <tr><td>P4</td><td>CERT-In empanelment</td><td>M26–M30</td><td class="num">Rs 6 L</td></tr>
+      <tr><td>P4</td><td>Annual penetration testing (refresh)</td><td>M30, M36</td><td class="num">Rs 16 L</td></tr>
+      <tr class="total"><td colspan="3"><strong>Programme audit and compliance outlay</strong></td><td class="num"><strong>Rs 1.16 Cr</strong></td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p class="aside">The Rs 1.16 Cr direct audit outlay plus Rs 0.34 Cr in continuing threat-intelligence licences and regulatory-counsel fees aggregates to the Rs 1.50 Cr "Audits &amp; compliance" line in the second-level decomposition. Threat-intelligence licences are accounted under compliance because they are required by the regulatory and audit posture rather than being a discretionary feature.</p>
+</section>
+</div>
+
+<div class="shell">
+<section id="sec-13">
+  <div class="section-num">Section 13 — Financials &amp; Cash Flow</div>
+  <h2 class="section-title serif">Month-by-month deployment of Rs 13.50 crore.</h2>
+  <p class="section-lede">A capital plan that is stated only at phase aggregation can hide the timing risk that determines whether the company survives. The cash-flow schedule below traces every quarter from M0 through M36 — monthly burn, recognised customer revenue, net cash drawdown, and cumulative capital deployed.</p>
+
+  <h3 class="serif" style="margin-top:2rem;margin-bottom:1rem">Quarterly cash-flow schedule</h3>
+
+  <div class="tbl-wrap">
+  <table class="cashflow-table">
+    <thead>
+      <tr>
+        <th>Quarter</th>
+        <th>FTE</th>
+        <th>Comp.</th>
+        <th>Infra.</th>
+        <th>Audit</th>
+        <th>Other</th>
+        <th>Outflow</th>
+        <th>Revenue</th>
+        <th>Net burn</th>
+        <th>Cum. cap.</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Q1 (M0–M3)</td><td>3</td><td>15</td><td>3</td><td>1</td><td>3</td><td>22</td><td class="pos">0</td><td class="neg">−22</td><td>22</td></tr>
+      <tr><td>Q2 (M4–M6)</td><td>4</td><td>20</td><td>3</td><td>2</td><td>2</td><td>27</td><td class="pos">0</td><td class="neg">−27</td><td>49</td></tr>
+      <tr><td>Q3 (M7–M9)</td><td>5</td><td>22</td><td>4</td><td>3</td><td>3</td><td>32</td><td class="pos">3</td><td class="neg">−29</td><td>78</td></tr>
+      <tr><td>Q4 (M10–M12)</td><td>6</td><td>27</td><td>5</td><td>5</td><td>3</td><td>40</td><td class="pos">8</td><td class="neg">−32</td><td>110</td></tr>
+      <tr class="subtotal"><td><strong>Year 1</strong></td><td>—</td><td>84</td><td>15</td><td>11</td><td>11</td><td>121</td><td class="pos">11</td><td class="neg">−110</td><td>110</td></tr>
+      <tr><td>Q5 (M13–M15)</td><td>10</td><td>40</td><td>15</td><td>15</td><td>5</td><td>75</td><td class="pos">15</td><td class="neg">−60</td><td>170</td></tr>
+      <tr><td>Q6 (M16–M18)</td><td>17</td><td>72</td><td>40</td><td>10</td><td>15</td><td>137</td><td class="pos">22</td><td class="neg">−115</td><td>285</td></tr>
+      <tr><td>Q7 (M19–M21)</td><td>20</td><td>78</td><td>35</td><td>20</td><td>15</td><td>148</td><td class="pos">28</td><td class="neg">−120</td><td>405</td></tr>
+      <tr><td>Q8 (M22–M24)</td><td>22</td><td>85</td><td>15</td><td>5</td><td>25</td><td>130</td><td class="pos">35</td><td class="neg">−95</td><td>500</td></tr>
+      <tr class="subtotal"><td><strong>Year 2</strong></td><td>—</td><td>275</td><td>105</td><td>50</td><td>60</td><td>490</td><td class="pos">100</td><td class="neg">−390</td><td>500</td></tr>
+      <tr><td>Q9 (M25–M27)</td><td>23</td><td>90</td><td>15</td><td>4</td><td>20</td><td>129</td><td class="pos">55</td><td class="neg">−74</td><td>574</td></tr>
+      <tr><td>Q10 (M28–M30)</td><td>25</td><td>105</td><td>20</td><td>4</td><td>22</td><td>151</td><td class="pos">85</td><td class="neg">−66</td><td>640</td></tr>
+      <tr><td>Q11 (M31–M33)</td><td>26</td><td>112</td><td>20</td><td>20</td><td>22</td><td>174</td><td class="pos">120</td><td class="neg">−54</td><td>694</td></tr>
+      <tr><td>Q12 (M34–M36)</td><td>26</td><td>118</td><td>15</td><td>30</td><td>21</td><td>184</td><td class="pos">150</td><td class="neg">−34</td><td>728</td></tr>
+      <tr class="subtotal"><td><strong>Year 3</strong></td><td>—</td><td>425</td><td>70</td><td>58</td><td>85</td><td>638</td><td class="pos">410</td><td class="neg">−228</td><td>728</td></tr>
+      <tr><td>Reserves</td><td>—</td><td>36</td><td>10</td><td>—</td><td>75</td><td>121</td><td class="pos">—</td><td class="neg">−121</td><td>849</td></tr>
+      <tr><td>Transaction</td><td>—</td><td>—</td><td>—</td><td>30</td><td>20</td><td>50</td><td class="pos">—</td><td class="neg">−50</td><td>899</td></tr>
+      <tr class="total"><td><strong>Programme total</strong></td><td>—</td><td><strong>820</strong></td><td><strong>200</strong></td><td><strong>149</strong></td><td><strong>251</strong></td><td><strong>1,420</strong></td><td class="pos"><strong>521</strong></td><td class="neg"><strong>−899</strong></td><td><strong>899</strong></td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p class="aside">All figures in Rs lakh. Programme totals reconcile to Rs 13.50 Cr gross outlay (1,350 lakh) and Rs 9.00 Cr net (900 lakh) within rounding tolerance. The minor variance against gross-outlay table reflects quarter-aggregation rounding plus distribution of reserve and transaction costs across the schedule. Customer revenue is recognised conservatively on cash-basis equivalent — pilot conversion in Q3 / Q4, paid pilot ramp in Year 2, post-GA customer scale-out in Year 3.</p>
+
+  <h3 class="serif" style="margin-top:2rem;margin-bottom:1rem">Key inflection points</h3>
+
+  <ul class="refined-list">
+    <li><strong>Q3 (M9) — first pilot revenue.</strong> Cumulative capital deployed Rs 78 lakh. Three FTE on payroll. First Rs 3 lakh of pilot revenue arrives — directionally meaningful, financially immaterial.</li>
+    <li><strong>Q5 (M15) — Phase 3 ramp begins.</strong> Cumulative capital deployed Rs 170 lakh (Rs 1.70 Cr). Hiring waterfall accelerates from 7 to 17 FTE across the next two quarters. Quarterly burn doubles from Q5 to Q6.</li>
+    <li><strong>Q7 (M21) — peak quarterly burn.</strong> Net burn of Rs 120 lakh in this quarter alone. Cumulative capital deployed Rs 405 lakh. The most capital-stressed period of the programme. Series A round must close within the next two quarters.</li>
+    <li><strong>Q8 (M24) — Series A close target.</strong> Cumulative capital deployed Rs 500 lakh (Rs 5.00 Cr). Series A tranche of Rs 7 Cr expected to land in this quarter against three reference customers. Burn begins to moderate as revenue scales.</li>
+    <li><strong>Q11 (M33) — break-even approaches.</strong> Quarterly burn of Rs 54 lakh against quarterly revenue of Rs 120 lakh. Run-rate ARR approximately Rs 4.8 Cr. The inflection point — monthly revenue exceeds monthly burn — occurs within this quarter in base-case scenario.</li>
+    <li><strong>Q12 (M36) — programme close.</strong> Cumulative capital deployed Rs 899 lakh (Rs 8.99 Cr). Quarterly revenue of Rs 150 lakh (annualised Rs 6 Cr ARR run-rate). Company operationally self-sustaining; further capital deployment is for accelerated growth rather than survival.</li>
+  </ul>
+</section>
+</div>
+
+<div class="shell">
+<section id="sec-14">
+  <div class="section-num">Section 14 — Funding Strategy</div>
+  <h2 class="section-title serif">Two rounds. Three milestones. Rs 9 crore net capital ask.</h2>
+  <p class="section-lede">The funding strategy sequences capital landings against operational milestones rather than calendar months. Each tranche unlocks against a defensible commercial achievement. The strategy minimises dilution by taking only the capital required to reach the next milestone.</p>
+
+  <div class="tbl-wrap">
+  <table class="dpr">
+    <caption>Table 14·A — Funding sources mapped to programme phases</caption>
+    <thead>
+      <tr><th>Source</th><th class="num">Amount</th><th>Trigger / milestone</th><th>Status</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Founders' working capital + LLP retained surplus</td><td class="num">Rs 1.20 Cr</td><td>M0 deployment</td><td>Already on balance sheet</td></tr>
+      <tr><td>Series-Seed (angel + early institutional)</td><td class="num">Rs 0.80 Cr</td><td>M2–M3 close against Phase 0 deliverables</td><td>Conversations active</td></tr>
+      <tr><td>Pilot customer revenue (M8 onwards)</td><td class="num">Rs 0.85 Cr</td><td>Recognised across Phase 2 and Phase 3</td><td>3 LOIs targeted by M6</td></tr>
+      <tr><td>Series A institutional</td><td class="num">Rs 7.00 Cr</td><td>M24 close against 3 reference customers + Rs 1.5 Cr ARR run-rate</td><td>Three institutional conversations to be opened in P3</td></tr>
+      <tr><td>Customer revenue (M22 onwards)</td><td class="num">Rs 3.65 Cr</td><td>Post-GA ARR scale-out across Year 3</td><td>Base-case scenario</td></tr>
+      <tr class="total"><td><strong>Total funding sources</strong></td><td class="num"><strong>Rs 13.50 Cr</strong></td><td>—</td><td>—</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3 class="serif" style="margin-top:2rem;margin-bottom:1rem">Series A round structuring</h3>
+
+  <div class="two-col">
+    <div class="two-col-label">Round structure</div>
+    <div class="two-col-body">
+      <p>The Series A round is sized at Rs 7 crore against an Rs 80–120 crore post-money valuation in base-case scenario. The valuation envelope is calibrated to comparable Indian deep-tech cybersecurity Series A rounds in 2024–2025 — Safe Security's USD 70 million Series C in 2024 led by Cisco Investments anchors the upper end of the comparable set, while Druva's earlier rounds at smaller valuations anchor the lower end. Quisitive's combination of three reference customers, Rs 1.5 Cr+ ARR run-rate, BFSI-native compliance posture, and existing infrastructure deployment positions the round in the middle of this comparable set.</p>
+      <p>Target lead investors are Indian deep-tech-aware funds with cybersecurity portfolio depth — Peak XV (formerly Sequoia India), Elevation Capital, Lightspeed India, and Blume Ventures form the primary outreach set. Strategic-investor participation from Cisco Investments, Mastercard Foundation, or analogous BFSI-aligned strategics is sought as a secondary co-investor layer. The investment-bank advisory is calibrated to round size — a boutique adviser at Rs 7 crore round size is the appropriate engagement structure rather than a bulge-bracket bank.</p>
+      <p>Round closing fees are budgeted at Rs 55 lakh — approximately seven per cent of round size at the upper end of the typical four-to-seven-per-cent range for Indian Series A rounds. This includes investment-bank fees (three per cent), legal counsel (one and a half per cent), due-diligence response cost in the form of internal team time and external specialist support (one per cent), and miscellaneous transaction costs (half per cent).</p>
+    </div>
+  </div>
+
+  <h3 class="serif" style="margin-top:2rem;margin-bottom:1rem">Bridge instruments and non-dilutive options</h3>
+
+  <ul class="refined-list">
+    <li><strong>Startup India Seed Fund Scheme.</strong> Up to Rs 20 lakh non-dilutive grant available for proof-of-concept validation; suitable for Phase 0 / Phase 1 bridge if Series-Seed conversations slip.</li>
+    <li><strong>BIRAC Biotechnology Industry Partnership Programme.</strong> Cost-sharing instrument adjacent to the bioinformatics vertical that does not directly fund cybersecurity but improves the LLP-level cash position by offsetting bioinformatics-vertical opex.</li>
+    <li><strong>RBI HaRBInger initiative.</strong> Regulatory sandbox engagement provides credibility-amplification rather than direct funding; a successful HaRBInger engagement materially improves Series A valuation.</li>
+    <li><strong>Convertible debt bridge (if needed).</strong> If Series A round closing slips beyond M24, a convertible-debt bridge from existing seed investors or strategic partners is the preferred bridge instrument over emergency equity dilution. Discount to next round 15–25%; valuation cap aligned to internal Series A target.</li>
+  </ul>
+
+  <div class="callout">
+    <div class="callout-label">Why the Series A is sized at Rs 7 Cr rather than the larger round common in cybersecurity</div>
+    <p>A Series A of Rs 12–15 Cr would be readily defensible given the team, infrastructure, and customer trajectory at M24. The deliberate decision to size at Rs 7 Cr is a dilution-management choice. Rs 7 Cr is the minimum capital required to bridge from M24 to cash-flow break-even at M32–M34 with appropriate working-capital buffer. Any capital beyond that floor is taken at Series A valuation rather than at a higher Series B valuation twelve months later. The dilution arithmetic favours a tight Series A and a stronger Series B, provided the company has confidence in its commercial trajectory — which the three-customer reference base and Rs 1.5 Cr ARR run-rate at M24 supports.</p>
+  </div>
+</section>
+</div>
+
+<div class="shell">
+<section id="sec-15">
+  <div class="section-num">Section 15 — Revenue Model</div>
+  <h2 class="section-title serif">Three scenarios. One commercial trajectory.</h2>
+  <p class="section-lede">The Rs 4.50 crore revenue offset assumed in the capital plan is the conservative envelope of three modelled scenarios. The base-case scenario produces materially more revenue (Rs 5.50 crore) and the stretch scenario produces meaningfully more again (Rs 7.20 crore) — but the capital plan is sized against the conservative figure to preserve solvency in unfavourable outcomes.</p>
+
+  <h3 class="serif" style="margin-top:2rem;margin-bottom:1rem">Customer trajectory by scenario</h3>
+
+  <div class="tbl-wrap">
+  <table class="dpr">
+    <caption>Table 15·A — Customer count trajectory across 36 months</caption>
+    <thead>
+      <tr><th>Milestone</th><th>Month</th><th class="num">Conservative</th><th class="num">Base case</th><th class="num">Stretch</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>First pilot signed</td><td>M6–M8</td><td class="num">1</td><td class="num">1</td><td class="num">2</td></tr>
+      <tr><td>Three pilots running</td><td>M14</td><td class="num">2</td><td class="num">3</td><td class="num">4</td></tr>
+      <tr><td>Three paid contracts</td><td>M22 (GA)</td><td class="num">2</td><td class="num">3</td><td class="num">5</td></tr>
+      <tr><td>Year 3 customer base</td><td>M36</td><td class="num">8</td><td class="num">14</td><td class="num">22</td></tr>
+      <tr><td>Year 3 blended ACV</td><td>—</td><td class="num">Rs 22 L</td><td class="num">Rs 28 L</td><td class="num">Rs 34 L</td></tr>
+      <tr><td>Year 3 exit ARR</td><td>—</td><td class="num">Rs 1.76 Cr</td><td class="num">Rs 3.92 Cr</td><td class="num">Rs 7.48 Cr</td></tr>
+      <tr><td>Programme revenue (M0–M36)</td><td>—</td><td class="num">Rs 4.50 Cr</td><td class="num">Rs 5.50 Cr</td><td class="num">Rs 7.20 Cr</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3 class="serif" style="margin-top:2rem;margin-bottom:1rem">Pricing tiers and customer segmentation</h3>
+
+  <div class="tbl-wrap">
+  <table class="dpr">
+    <caption>Table 15·B — Customer segments and ACV envelopes</caption>
+    <thead>
+      <tr><th>Segment</th><th>Profile</th><th>Primary products</th><th class="num">ACV range</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Tier-1 banks</td><td>Scheduled commercial banks · Rs 1 lakh Cr+ assets</td><td>ForgeShield + ForgeSOC + ForgeSentinel</td><td class="num">Rs 60 L – 6 Cr</td></tr>
+      <tr><td>Tier-2 banks &amp; NBFCs</td><td>Smaller scheduled banks · upper-layer NBFCs</td><td>ForgeShield + ForgeIdentity + ForgeSOC</td><td class="num">Rs 24 – 60 L</td></tr>
+      <tr><td>Fintech &amp; payments</td><td>UPI TPAPs · payments aggregators · PPI issuers</td><td>ForgeShield + ForgeVault + ForgeSentinel</td><td class="num">Rs 18 – 45 L</td></tr>
+      <tr><td>SEBI-regulated</td><td>Brokers · mutual funds · KRAs · RTAs · depositories</td><td>ForgeSOC + ForgeVault + ForgeIntel</td><td class="num">Rs 12 – 36 L</td></tr>
+      <tr><td>Mid-market enterprise</td><td>IT-services · pharmaceutical · manufacturing · retail mid-market SOCs</td><td>ForgeSOC + ForgeSentinel + ForgeIdentity</td><td class="num">Rs 10 – 30 L</td></tr>
+      <tr><td>MSSP white-label</td><td>Managed-security-service providers serving end customers</td><td>AEGIS engine licence + ForgeSOC white-labelled</td><td class="num">Revenue share</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p class="aside">Land-and-expand within accounts is structurally enabled by the AlgoForge product separation — each product addresses a distinct buying centre, a customer can begin with a single product and expand into the others without changing vendors, data plane, or compliance posture. Typical 24-month account trajectory: ForgeShield pilot at Rs 8–12 lakh → ForgeShield paid contract at Rs 18–28 lakh → ForgeSOC addition at Rs 35–50 lakh blended ACV → multi-product enterprise agreement at Rs 65 lakh – Rs 1.2 crore three-year term.</p>
+</section>
+</div>
+
+<div class="shell">
+<section id="sec-16">
+  <div class="section-num">Section 16 — Risk Register</div>
+  <h2 class="section-title serif">Programme-fatal risks with named owners and quantified mitigations.</h2>
+  <p class="section-lede">A programme-level risk register is structurally different from a phase-level one — it surfaces risks that span phases, that interact, or that become severe only when compounding effects accumulate. The registry below covers risks specific to the full thirty-six-month programme rather than restating the v1 sub-programme risks.</p>
+
+  <div class="risk-grid">
+    <div class="risk">
+      <div class="risk-head"><h5>R-A · Capital exhaustion before break-even</h5><span class="risk-sev high">High</span></div>
+      <p>The fundamental programme-level risk: cumulative capital deployed exceeds available capital before customer revenue scales sufficiently to bridge the gap. Materialises if Series A closes late, or pilot conversion stalls, or hiring waterfall outpaces revenue ramp.</p>
+      <p class="mitig">Mitigation: cash-flow schedule reviewed monthly against actual; hiring waterfall has 4-week deferral capacity in Phase 3; convertible-debt bridge from seed investors as backstop; capital plan sized at conservative-revenue scenario rather than base case.</p>
+    </div>
+
+    <div class="risk">
+      <div class="risk-head"><h5>R-B · Series A market window contraction</h5><span class="risk-sev high">High</span></div>
+      <p>Indian deep-tech and cybersecurity venture market sentiment shifts during M14–M24 window; Series A round delayed beyond M24 target or completed at materially lower valuation, forcing additional dilution to raise the same capital.</p>
+      <p class="mitig">Mitigation: opening institutional conversations early in Phase 3 rather than at Phase 3 close; building relationships with three lead-investor candidates rather than one; non-dilutive bridges (Startup India Seed, BIRAC instruments, RBI HaRBInger credibility); base-case revenue trajectory designed to support Series A even in tepid market.</p>
+    </div>
+
+    <div class="risk">
+      <div class="risk-head"><h5>R-C · Pilot conversion shortfall</h5><span class="risk-sev high">High</span></div>
+      <p>The most consequential operational risk: fewer than three pilots convert to paid contracts by M22, undermining Series A defensibility and revenue trajectory.</p>
+      <p class="mitig">Mitigation: signing four pilots (target three conversions) rather than three; standard MSA/DPA templates pre-cleared by external counsel to compress legal review cycle; named-engineer customer relationships built across Phase 2; white-glove customer success engagement; explicit pilot-to-paid commercial milestones embedded in pilot agreements.</p>
+    </div>
+
+    <div class="risk">
+      <div class="risk-head"><h5>R-D · Senior engineering attrition cascade</h5><span class="risk-sev med">Medium</span></div>
+      <p>Loss of more than two senior engineers across the 36-month window — particularly the ML lead or Vertical Head — compromises engineering velocity, customer relationships, and tribal knowledge in ways that compound over subsequent quarters.</p>
+      <p class="mitig">Mitigation: ESOP refresh tied to v1 GA milestone (cliff at M22) and to Series A close (cliff at M24); compensation bands reviewed annually against NCR market rates with above-band counter-offer authority pre-approved; cross-training matrix maintained; technical documentation gating in CI; externally-facing tech-blog programme builds individual reputation tying engineers to the programme.</p>
+    </div>
+
+    <div class="risk">
+      <div class="risk-head"><h5>R-E · Compliance audit findings cascade</h5><span class="risk-sev med">Medium</span></div>
+      <p>SOC 2 Type II findings, ISO surveillance non-conformities, or pen-test critical findings that require sustained remediation effort, pulling engineering attention from product development and delaying GA.</p>
+      <p class="mitig">Mitigation: pre-audit gap assessment by Big-4 firm in Phase 2; ISO 27001:2022 control framework substantially overlaps SOC 2 controls; backup audit firm under retainer; quarterly internal compliance reviews; remediation engineering staffed as a dedicated resource during Phase 3.</p>
+    </div>
+
+    <div class="risk">
+      <div class="risk-head"><h5>R-F · Customer-pod isolation incident</h5><span class="risk-sev high">High</span></div>
+      <p>Cross-tenant data exposure due to misconfiguration or implementation defect in the pod-isolation architecture. Materialised consequence is existential to the LLP — recovery from such an event is structurally difficult in BFSI markets.</p>
+      <p class="mitig">Mitigation: defence-in-depth across 6 control layers; isolation regression suite of 200+ test cases gating every release; external pen-test specifically targeting cross-tenant exposure; per-customer encryption keys ensuring storage-layer data is uninterpretable across tenant boundaries; cyber-liability insurance scaled to Rs 50 Cr coverage from Phase 3.</p>
+    </div>
+
+    <div class="risk">
+      <div class="risk-head"><h5>R-G · Hyperscaler competitive entry</h5><span class="risk-sev med">Medium</span></div>
+      <p>AWS, Microsoft, Google, or an Indian hyperscaler launches a directly competitive Indian-sovereign BFSI-native offering at below-cost economics during the Phase 4 customer-acquisition window.</p>
+      <p class="mitig">Mitigation: compliance depth and BFSI-native architecture are the structural moats — hyperscaler cost advantage cannot offset compliance disadvantage in regulated procurement; tier-1 reference customers establish switching cost; product roadmap maintains 6-month feature-velocity advantage; strategic-partnership conversations with hyperscalers as channel rather than direct competition.</p>
+    </div>
+
+    <div class="risk">
+      <div class="risk-head"><h5>R-H · Regulatory framework upheaval</h5><span class="risk-sev low">Low</span></div>
+      <p>RBI, SEBI, or Data Protection Board issues clarifying circulars during the programme that materially change technical-control interpretation of existing master directions, requiring mid-programme architecture or compliance pivots.</p>
+      <p class="mitig">Mitigation: external regulatory counsel under retainer with monthly briefing; ForgeVault compliance-mapping framework designed for incremental control updates; participation in RBI HaRBInger-track industry consultations for forward visibility; architecture decisions deliberately avoid contested control interpretations.</p>
+    </div>
+
+    <div class="risk">
+      <div class="risk-head"><h5>R-I · Cross-vertical contention at LLP level</h5><span class="risk-sev low">Low</span></div>
+      <p>Capital, leadership attention, or shared-infrastructure capacity contention between cybersecurity, bioinformatics, and managed-services verticals at the LLP level, slowing cybersecurity-vertical execution.</p>
+      <p class="mitig">Mitigation: each vertical operates as independent P&amp;L subsidiary with its own engineering team and Vertical Head; shared infrastructure is capacity-allocated under documented schedule; LLP-level managing partner has explicit conflict-resolution authority; quarterly cross-vertical capacity review; cybersecurity vertical's customer-facing SLA commitments take precedence over internal cross-vertical compute contention.</p>
+    </div>
+
+    <div class="risk">
+      <div class="risk-head"><h5>R-J · Black-swan macro event</h5><span class="risk-sev low">Low</span></div>
+      <p>Geopolitical disruption, economic recession, banking-sector contraction, or other black-swan event that materially changes BFSI procurement budgets across the Phase 3 / Phase 4 window.</p>
+      <p class="mitig">Mitigation: working-capital reserve absorbs 6-month cost-reduction scenario; programme has built-in cost-flexibility levers (hiring waterfall deferral, infrastructure expansion deferral, sales scale-out deferral) totaling approximately Rs 2 Cr of in-year cost reduction; conservative-revenue scenario already designed against subdued procurement environment.</p>
+    </div>
+  </div>
+</section>
+</div>
+
+<div class="shell">
+<section id="sec-17">
+  <div class="section-num">Section 17 — Sensitivity Analysis</div>
+  <h2 class="section-title serif">What changes when the assumptions change.</h2>
+  <p class="section-lede">A capital plan is only as good as its tolerance for unfavourable assumption deviation. The sensitivity analysis below tests the programme against the three most consequential variables — revenue ramp speed, customer-count trajectory, and Series A timing — and identifies the points at which capital plan integrity is compromised.</p>
+
+  <h3 class="serif" style="margin-top:2rem;margin-bottom:1rem">Sensitivity to revenue ramp speed</h3>
+
+  <div class="tbl-wrap">
+  <table class="dpr">
+    <caption>Table 17·A — Capital impact of revenue-ramp delay</caption>
+    <thead>
+      <tr><th>Scenario</th><th class="num">Revenue M0–M36</th><th class="num">Net capital need</th><th class="num">Series A size</th><th>Implication</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Stretch ramp</td><td class="num">Rs 7.20 Cr</td><td class="num">Rs 6.30 Cr</td><td class="num">Rs 4.5 Cr</td><td>Smaller Series A · break-even by M30</td></tr>
+      <tr><td>Base case</td><td class="num">Rs 5.50 Cr</td><td class="num">Rs 8.00 Cr</td><td class="num">Rs 6.0 Cr</td><td>Standard plan · break-even by M32</td></tr>
+      <tr><td>Conservative (planning)</td><td class="num">Rs 4.50 Cr</td><td class="num">Rs 9.00 Cr</td><td class="num">Rs 7.0 Cr</td><td>Plan-of-record · break-even by M34</td></tr>
+      <tr><td>Stress test (revenue −30%)</td><td class="num">Rs 3.15 Cr</td><td class="num">Rs 10.35 Cr</td><td class="num">Rs 8.4 Cr</td><td>Series A bridge required · break-even by M36+</td></tr>
+      <tr><td>Severe stress (revenue −50%)</td><td class="num">Rs 2.25 Cr</td><td class="num">Rs 11.25 Cr</td><td class="num">Rs 9.3 Cr</td><td>Cost-flexibility levers must activate · M36+ break-even</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3 class="serif" style="margin-top:2rem;margin-bottom:1rem">Sensitivity to Series A close timing</h3>
+
+  <div class="tbl-wrap">
+  <table class="dpr">
+    <caption>Table 17·B — Impact of Series A close month variation</caption>
+    <thead>
+      <tr><th>Series A close month</th><th>Pre-Series A capital</th><th>Burn rate at close</th><th>Programme impact</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>M22 (early)</td><td>Rs 4.05 Cr deployed</td><td>Rs 40 L/month</td><td>Best case · enables stretch hiring scenario</td></tr>
+      <tr><td>M24 (plan)</td><td>Rs 5.00 Cr deployed</td><td>Rs 32 L/month</td><td>Plan-of-record · standard hiring</td></tr>
+      <tr><td>M26 (mild slip)</td><td>Rs 5.65 Cr deployed</td><td>Rs 30 L/month</td><td>Manageable · 2-month hiring deferral activated</td></tr>
+      <tr><td>M28 (significant slip)</td><td>Rs 6.25 Cr deployed</td><td>Rs 28 L/month</td><td>Convertible-debt bridge required · 4-month deferral</td></tr>
+      <tr><td>M30+ (severe slip)</td><td>Rs 6.85 Cr deployed</td><td>Rs 26 L/month</td><td>Programme distress · cost-cutting protocol activated</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3 class="serif" style="margin-top:2rem;margin-bottom:1rem">Cost-flexibility levers — in priority order of activation</h3>
+
+  <ol class="num-list">
+    <li>
+      <strong>Defer Phase 3 final hires (Rs 35 L savings).</strong>
+      Hold the last three Phase 3 hires (M21 sales, M22 SDR, second senior product engineer) for two quarters. Engineering pace slows but core deliverables intact. Activated when Series A slips beyond M25.
+    </li>
+    <li>
+      <strong>Defer Phase 4 sales expansion (Rs 60 L savings).</strong>
+      Hold the two additional BFSI account directors at M28–M30. Pipeline development slows but customer success on existing accounts unaffected. Activated when Series A slips beyond M27.
+    </li>
+    <li>
+      <strong>Defer infrastructure expansion (Rs 45 L savings).</strong>
+      Postpone capacity scale-out beyond five concurrent customers and second-region DR commissioning. Operational risk increases but programme survives. Activated when Series A slips beyond M28.
+    </li>
+    <li>
+      <strong>Reduce Phase 4 senior compensation by 20% (Rs 80 L savings).</strong>
+      Top five senior roles take temporary 20% cash compensation reduction with offsetting ESOP refresh at next round. Highly disruptive · activated only as last resort.
+    </li>
+  </ol>
+
+  <p class="aside">The cost-flexibility levers cumulatively yield approximately Rs 2.20 crore of in-year savings if all activated. This buffer plus the working-capital reserve provides sustained survival capacity through approximately a 9-month Series A delay before structurally compromising programme deliverables. Beyond that horizon, programme-level escalation to founders and existing investors is the appropriate path.</p>
+</section>
+</div>
+
+<div class="shell">
+<section id="sec-18">
+  <div class="section-num">Section 18 — Sustainability &amp; Exit Pathways</div>
+  <h2 class="section-title serif">Beyond programme close. The shape of the company at month 36.</h2>
+  <p class="section-lede">A 36-month capital plan is not a 36-month business plan. The programme close is the inflection point at which the company becomes self-sustaining and the operational economics begin to determine its own trajectory. Three pathways are credible from M36 forward.</p>
+
+  <div class="detail-grid">
+    <div class="detail-card">
+      <div class="detail-card-num">i.</div>
+      <h4>Independent growth (default pathway)</h4>
+      <p>Continue operating as independent profit-centre subsidiary of Quisitive Businesses LLP. Series B round at M40–M44 against Rs 8–12 Cr ARR run-rate, sized at Rs 25–40 Cr at Rs 250–350 Cr post-money valuation. Geographic expansion to UAE, Singapore, ASEAN markets with similar regulatory profiles. Continued product expansion into adjacent BFSI security categories.</p>
+      <div class="meta">Owner: Vertical Head Cybersecurity · Decision: M30</div>
+    </div>
+    <div class="detail-card">
+      <div class="detail-card-num">ii.</div>
+      <h4>Strategic acquisition</h4>
+      <p>Indian or global BFSI-aligned strategic acquirer (large-bank parent, payments network, established cybersecurity vendor) acquires the cybersecurity vertical for capability acquisition. Indicative enterprise value at M36: Rs 200–400 Cr based on 8–12× ARR multiple at growth-phase comparables. Founder and ESOP holder liquidity event.</p>
+      <div class="meta">Owner: LLP Managing Partner · Trigger: opportunistic</div>
+    </div>
+    <div class="detail-card">
+      <div class="detail-card-num">iii.</div>
+      <h4>IPO pathway (long horizon)</h4>
+      <p>Independent growth path with IPO targeted at Rs 300–500 Cr ARR run-rate. Indian deep-tech IPO market matured substantially through 2024–2026; SEBI listing window for software-as-a-service companies with BFSI exposure is well-trodden. Five-to-seven-year horizon from programme close. Requires Rs 100–200 Cr aggregate capital raised across Series B, C, and pre-IPO rounds.</p>
+      <div class="meta">Owner: Board · Decision: M48+</div>
+    </div>
+    <div class="detail-card">
+      <div class="detail-card-num">iv.</div>
+      <h4>LLP buyback / management buyout</h4>
+      <p>If external capital markets unfavourable for Series B and operational economics support self-financed growth, LLP-level cash flows from cross-vertical operations buy back outside Series A holders at agreed valuation. Founder and management team retain full ownership. Slower growth trajectory but maximum control.</p>
+      <div class="meta">Owner: Board · Trigger: capital-market dependent</div>
+    </div>
+  </div>
+
+  <h3 class="serif" style="margin-top:2rem;margin-bottom:1rem">Operational sustainability metrics — tracked from M22</h3>
+
+  <ul class="refined-list">
+    <li><strong>Net revenue retention (NRR).</strong> Target ≥ 115% — customer-base value grows year-over-year through expansion and upsell, even excluding new logos.</li>
+    <li><strong>Gross margin.</strong> Target 65–72% at v1 economics, climbing to 72–78% as fixed costs amortise across customer base.</li>
+    <li><strong>Customer acquisition cost (CAC) payback.</strong> Target &lt; 18 months — typical Indian BFSI sale produces ROI within the first ARR contract cycle.</li>
+    <li><strong>Magic number (revenue growth / sales spend).</strong> Target ≥ 0.8 — sales investment efficiently produces revenue growth at scale.</li>
+    <li><strong>Rule of 40.</strong> Revenue growth percentage plus profit margin ≥ 40 — the SaaS-industry standard for healthy growth-vs-profitability balance.</li>
+  </ul>
+</section>
+</div>
+
+<div class="shell">
+<section id="sec-19">
+  <div class="section-num">Section 19 — Appendices &amp; References</div>
+  <h2 class="section-title serif">Source documents, regulatory citations, financial reconciliation.</h2>
+
+  <h3 class="serif" style="margin-top:2rem;margin-bottom:1rem">Appendix A · Programme summary at a glance</h3>
+
+  <p>The single-page summary below consolidates the operational and financial parameters of the AEGIS programme into the briefest possible reference for board-level and investor-level review.</p>
+
+  <div class="tbl-wrap">
+  <table class="dpr">
+    <thead>
+      <tr><th>Parameter</th><th>Value</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Programme window</td><td>M0 → M36 (36 months) · incorporation to commercial self-sufficiency</td></tr>
+      <tr><td>Total gross outlay</td><td>Rs 13.50 crore</td></tr>
+      <tr><td>Build cost (M0 → M22)</td><td>Rs 5.40 crore across four phases</td></tr>
+      <tr><td>Operations runway (M22 → M36)</td><td>Rs 6.80 crore — largest single bucket</td></tr>
+      <tr><td>Transaction &amp; reserve costs</td><td>Rs 1.30 crore</td></tr>
+      <tr><td>Conservative customer-revenue offset</td><td>Rs 4.50 crore over 36-month window</td></tr>
+      <tr><td>Net external capital requirement</td><td>Rs 9.00 crore</td></tr>
+      <tr><td>Funding sequence</td><td>Founders Rs 1.20 Cr · Seed Rs 0.80 Cr · Series A Rs 7.00 Cr · customer revenue balance</td></tr>
+      <tr><td>Series A close target</td><td>M24 against three reference customers and Rs 1.5 Cr+ ARR run-rate</td></tr>
+      <tr><td>Series A valuation envelope (base)</td><td>Rs 80–120 crore post-money</td></tr>
+      <tr><td>Headcount peak</td><td>26 FTE in Phase 4 (M30+)</td></tr>
+      <tr><td>Compensation as % of total outlay</td><td>59.3% (Rs 8.00 crore)</td></tr>
+      <tr><td>Cash-flow break-even (base case)</td><td>Approximately M32 — monthly revenue exceeds monthly burn</td></tr>
+      <tr><td>Year-3 exit ARR (base case)</td><td>Rs 3.92 crore from 14 customers at Rs 28 lakh blended ACV</td></tr>
+      <tr><td>Existing infrastructure deployed</td><td>Rs 3.85 crore HPC installation in Greater Noida (already commissioned)</td></tr>
+      <tr><td>Existing certifications</td><td>ISO 27001:2022 · ISO 9001:2015 · ISO 20000-1:2018 (issued 27 Feb 2026)</td></tr>
+      <tr><td>Compliance attestations targeted in programme</td><td>SOC 2 Type II · CERT-In empanelment · ISO surveillance audits</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3 class="serif" style="margin-top:2rem;margin-bottom:1rem">Appendix B · Quisitive certifications &amp; attestations</h3>
+
+  <div class="tbl-wrap">
+  <table class="dpr">
+    <thead>
+      <tr><th>Standard</th><th>Certificate no.</th><th>Issued</th><th>Valid through</th><th>Accreditation</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>ISO/IEC 27001:2022 — ISMS</td><td>26UQAV11</td><td>27 Feb 2026</td><td>26 Feb 2029</td><td>UAF &amp; IAF</td></tr>
+      <tr><td>ISO 9001:2015 — QMS</td><td>26UQAV12</td><td>27 Feb 2026</td><td>26 Feb 2029</td><td>UAF &amp; IAF (IAF Code 33)</td></tr>
+      <tr><td>ISO/IEC 20000-1:2018 — ITSMS</td><td>26UITAH14</td><td>27 Feb 2026</td><td>26 Feb 2029</td><td>UAF</td></tr>
+      <tr><td>SOC 2 Type II — five TSC</td><td>—</td><td>In progress</td><td>—</td><td>Big-4 / Tier-2 audit firm under engagement</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3 class="serif" style="margin-top:2rem;margin-bottom:1rem">Appendix C · Primary regulatory references</h3>
+
+  <ul class="refined-list">
+    <li>Reserve Bank of India · <em>Master Direction on Information Technology Governance, Risk, Controls and Assurance Practices</em> · RBI/2023-24/107 · 7 November 2023</li>
+    <li>Reserve Bank of India · <em>Master Direction on Fraud Risk Management</em> · DOS.CO.FMG.SEC.No.5/23.04.001/2024-25 · 2024</li>
+    <li>Reserve Bank of India · <em>Master Directions on Cyber Resilience and Digital Payment Security Controls for non-bank Payment System Operators</em> · July 2024</li>
+    <li>Securities and Exchange Board of India · <em>Cybersecurity and Cyber Resilience Framework (CSCRF)</em> · 2024</li>
+    <li>Government of India · <em>Digital Personal Data Protection Act 2023</em> · operationalised 2025</li>
+    <li>Reserve Bank of India · <em>HaRBInger initiative for AI-based detection and response in banking</em> · 2024 onwards</li>
+    <li>NIST · <em>SP 800-53 Rev. 5 — Security and Privacy Controls for Information Systems and Organizations</em></li>
+    <li>NIST · <em>Cybersecurity Framework v2.0</em> · 2024</li>
+    <li>MITRE · <em>ATT&amp;CK Framework v15</em> · Enterprise · Mobile · ICS</li>
+  </ul>
+
+  <h3 class="serif" style="margin-top:2rem;margin-bottom:1rem">Appendix D · Comparable Indian deep-tech cybersecurity rounds</h3>
+
+  <div class="tbl-wrap">
+  <table class="dpr">
+    <thead>
+      <tr><th>Company</th><th>Round</th><th>Year</th><th>Size</th><th>Lead investor</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Druva</td><td>Series H · valuation USD 2 Bn (unicorn)</td><td>2021</td><td>USD 147 M</td><td>CDPQ</td></tr>
+      <tr><td>Safe Security</td><td>Series C</td><td>2024</td><td>USD 70 M</td><td>Cisco Investments</td></tr>
+      <tr><td>SecureLayer7</td><td>Series A</td><td>2023</td><td>Undisclosed</td><td>Peak XV portfolio</td></tr>
+      <tr><td>Sequretek</td><td>Series B</td><td>2022</td><td>USD 12 M</td><td>Omidyar Network</td></tr>
+      <tr><td>Lucideus (now Safe Security)</td><td>Series A</td><td>2018</td><td>USD 5 M</td><td>John Chambers / individual</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3 class="serif" style="margin-top:2rem;margin-bottom:1rem">Appendix E · Document control</h3>
+
+  <div class="tbl-wrap">
+  <table class="dpr">
+    <thead>
+      <tr><th>Field</th><th>Value</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Document reference</td><td>QSV/DPR/AEGIS/2026-05</td></tr>
+      <tr><td>Issuing entity</td><td>Quisitive Businesses LLP</td></tr>
+      <tr><td>Registered office</td><td>11th Floor, Tower-1, Artha SEZ, Plot No-21, Tech Zone-IV, Gautam Buddha Nagar 201301, Noida, Uttar Pradesh, India</td></tr>
+      <tr><td>Document classification</td><td>Confidential — recipients under NDA</td></tr>
+      <tr><td>Revision</td><td>1.0 (Initial release)</td></tr>
+      <tr><td>Document date</td><td>01 May 2026</td></tr>
+      <tr><td>Document owner</td><td>Managing Partner, Quisitive Businesses LLP</td></tr>
+      <tr><td>Approving authority</td><td>LLP Board of Partners</td></tr>
+      <tr><td>Distribution</td><td>Internal management committee · Series A institutional investors under NDA · LLP partners · external counsel</td></tr>
+      <tr><td>Document hash (SHA-256)</td><td>To be computed at issuance</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="divider-orn">·  ·  ·</div>
+</section>
+</div>
+
+<footer>
+<div class="shell">
+  <div>
+    <h5>Quisitive Businesses LLP</h5>
+    <p>Computational discovery, AI-native cybersecurity, sovereign managed cloud — three specialist verticals on enterprise high-performance compute infrastructure deployed in Greater Noida. Serving Indian pharmaceutical R&amp;D teams, BFSI security operations centres, and regulated-industry IT organisations that require data-sovereign compute, scientific rigor, and compliance depth beyond what hyperscaler cloud can economically deliver.</p>
+    <p style="margin-top:1rem"><a href="https://quisitivebusinesses.com/" style="color:var(--gold);text-decoration:none">quisitivebusinesses.com</a></p>
+  </div>
+  <div>
+    <h5>This document</h5>
+    <ul>
+      <li>QSV/DPR/AEGIS/2026-05</li>
+      <li>Revision 1.0</li>
+      <li>01 May 2026</li>
+      <li>Confidential — NDA</li>
+    </ul>
+  </div>
+  <div>
+    <h5>Programme</h5>
+    <ul>
+      <li>AEGIS NOC/SOC end-to-end</li>
+      <li>Months 0 → 36</li>
+      <li>Outlay Rs 13.50 Cr</li>
+      <li>Net capital Rs 9 Cr</li>
+    </ul>
+  </div>
+  <div class="colophon" style="grid-column:1 / -1">
+    <span>© 2026 Quisitive Businesses LLP · All rights reserved.</span>
+    <span>Set in Fraunces &amp; Inter Tight · JetBrains Mono for monospace</span>
+    <span>Issued under NDA to authorised recipients</span>
+  </div>
+</div>
+</footer>
+
+</body>
+</html>
